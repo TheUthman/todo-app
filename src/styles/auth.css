@@ -1,0 +1,375 @@
+/* ==========================================
+   AUTH PAGES — Login & Register
+   ========================================== */
+
+.auth-page {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: var(--bg-main);
+  padding: 2rem;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Background decorative blobs (Preserved) */
+.auth-page::before {
+  content: '';
+  position: fixed;
+  top: -200px;
+  right: -200px;
+  width: 600px;
+  height: 600px;
+  border-radius: var(--radius-full);
+  background: radial-gradient(circle, rgba(0, 78, 152, 0.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.auth-page::after {
+  content: '';
+  position: fixed;
+  bottom: -150px;
+  left: -150px;
+  width: 500px;
+  height: 500px;
+  border-radius: var(--radius-full);
+  background: radial-gradient(circle, rgba(92, 143, 194, 0.06) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+/* ── Auth Card ── */
+.auth-card {
+  width: 960px;
+  max-width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  background: var(--bg-surface);
+  border-radius: var(--radius-2xl);
+  overflow: hidden;
+  box-shadow: var(--shadow-lg);
+  border: 1px solid var(--border-light);
+  position: relative;
+  z-index: 1;
+}
+
+/* ==========================================
+   LEFT PANEL: ILLUSTRATION SPACE
+   ========================================== */
+.auth-illustration {
+  background: var(--gradient-primary);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3.5rem;
+  position: relative;
+  overflow: hidden;
+  gap: 1.5rem;
+}
+
+.auth-illustration::before {
+  content: '';
+  position: absolute;
+  top: -80px;
+  right: -80px;
+  width: 280px;
+  height: 280px;
+  border-radius: var(--radius-full);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.auth-illustration::after {
+  content: '';
+  position: absolute;
+  bottom: -60px;
+  left: -60px;
+  width: 220px;
+  height: 220px;
+  border-radius: var(--radius-full);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.auth-illustration img {
+  width: 72%;
+  max-width: 260px;
+  position: relative;
+  z-index: 1;
+  filter: drop-shadow(0 8px 24px rgba(0, 0, 0, 0.15));
+  animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-12px); }
+}
+
+.auth-brand {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+}
+
+.auth-brand h2 {
+  font-size: var(--fs-2xl);
+  font-weight: var(--fw-extrabold);
+  color: var(--text-light);
+  letter-spacing: var(--ls-tight);
+  margin-bottom: 0.375rem;
+}
+
+.auth-brand p {
+  font-size: var(--fs-sm);
+  color: rgba(255, 255, 255, 0.8);
+}
+
+/* ==========================================
+   RIGHT PANEL: FORM WORKSPACE
+   ========================================== */
+.auth-form-container, .auth-form {
+  padding: 3rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.auth-form-header {
+  margin-bottom: 2rem;
+}
+
+.auth-form-header h2 {
+  font-size: var(--fs-2xl);
+  font-weight: var(--fw-extrabold);
+  color: var(--text-primary);
+  letter-spacing: var(--ls-tight);
+  margin-bottom: 0.375rem;
+}
+
+.auth-form-header p {
+  font-size: var(--fs-sm);
+  color: var(--text-secondary);
+}
+
+.actual-form-flow {
+  display: flex;
+  flex-direction: column;
+  gap: 1.125rem;
+}
+
+/* ── Upgraded Input Layout Groups ── */
+.auth-input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.auth-input-label {
+  display: block;
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-semibold);
+  color: var(--text-primary);
+}
+
+.input-with-icon-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+/* Vector Inline Icons Positioning */
+.input-addon-icon {
+  position: absolute;
+  left: 14px;
+  color: var(--text-muted);
+  font-size: var(--fs-sm);
+  pointer-events: none;
+  transition: color var(--transition-fast);
+  z-index: 2;
+}
+
+.auth-text-input {
+  width: 100%;
+  padding: 0.75rem 1rem 0.75rem 42px; /* Extra left padding to yield spacing geometry for structural icons */
+  border: 1.5px solid var(--border-default);
+  border-radius: var(--radius-md);
+  background: var(--bg-surface);
+  color: var(--text-primary);
+  font-size: var(--fs-sm);
+  transition: all var(--transition-fast);
+}
+
+.auth-text-input:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(0, 78, 152, 0.15);
+  background: var(--bg-surface);
+  outline: none;
+}
+
+.auth-text-input:focus ~ .input-addon-icon {
+  color: var(--color-primary);
+}
+
+.auth-text-input.password-field {
+  padding-right: 44px; /* Space on right for visibility button toggle */
+}
+
+/* ── Interactive Password Eye Button ── */
+.password-toggle-visibility-btn {
+  position: absolute;
+  right: 6px;
+  width: 36px;
+  height: 36px;
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font-size: var(--fs-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: color var(--transition-fast);
+  z-index: 2;
+}
+
+.password-toggle-visibility-btn:hover {
+  color: var(--text-primary);
+}
+
+/* ==========================================
+   SUBMISSION ACTIONS & STATUS SIGNALS
+   ========================================== */
+
+/* ── Auth Submit Button ── */
+.auth-submit-btn {
+  width: 100%;
+  margin-top: 1.25rem;
+  padding: 0.875rem;
+  border: none;
+  border-radius: var(--radius-md);
+  background: var(--gradient-primary);
+  color: var(--text-light);
+  font-size: var(--fs-md);
+  font-weight: var(--fw-semibold);
+  letter-spacing: 0.01em;
+  box-shadow: 0 4px 14px rgba(0, 78, 152, 0.35);
+  transition: all var(--transition-base);
+  cursor: pointer;
+}
+
+.auth-submit-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 78, 152, 0.45);
+}
+
+.auth-submit-btn:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.auth-submit-btn:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+/* ── Loading Spinner Flow Infrastructure ── */
+.auth-btn-spinner-flow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.spinner-dot {
+  width: 18px;
+  height: 18px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top-color: var(--text-light);
+  border-radius: var(--radius-full);
+  animation: authSpinnerRotate 0.6s linear infinite;
+}
+
+@keyframes authSpinnerRotate {
+  to { transform: rotate(360deg); }
+}
+
+/* ── Premium Switch Auth Footer Links ── */
+.switch-auth-link {
+  margin-top: 1.5rem;
+  text-align: center;
+  font-size: var(--fs-sm);
+  color: var(--text-secondary);
+}
+
+.premium-accent-link {
+  color: var(--color-primary);
+  font-weight: var(--fw-semibold);
+  margin-left: 0.25rem;
+  text-decoration: none;
+}
+
+.premium-accent-link:hover {
+  color: var(--color-primary-hover);
+  text-decoration: underline;
+}
+
+/* ── Injected Live Error Banner ── */
+.auth-error-banner {
+  background: var(--danger-soft);
+  color: var(--danger);
+  border: 1px solid rgba(239, 68, 68, 0.2);
+  padding: 0.75rem 1rem;
+  border-radius: var(--radius-md);
+  margin-bottom: 1.25rem;
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-medium);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+/* ── Realtime Password Strength Componentry ── */
+.pwd-strength-container {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.pwd-strength-bar-track {
+  width: 100%;
+  height: 4px;
+  background-color: var(--border-default);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+}
+
+.pwd-strength-bar-fill {
+  height: 100%;
+  width: 0%;
+  border-radius: var(--radius-full);
+  transition: width var(--transition-base), background-color var(--transition-fast);
+}
+
+.pwd-strength-label {
+  align-self: flex-end;
+  font-size: var(--fs-xs);
+}
+
+.pwd-match-badge {
+  animation: float 0.2s ease-out; /* Uses your pre-existing float keyframes or default transition */
+}
+/* ==========================================
+   RESPONSIVE DESIGN VIEWPORTS MEDIA SCALES
+   ========================================== */
+@media (max-width: 768px) {
+  .auth-card {
+    grid-template-columns: 1fr;
+    max-width: 460px;
+  }
+
+  .auth-illustration {
+    display: none; /* Safely collapse left artwork space layout on mobile views */
+  }
+
+  .auth-form-container, .auth-form {
+    padding: 2.5rem 2rem;
+  }
+}

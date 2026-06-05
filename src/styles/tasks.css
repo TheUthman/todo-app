@@ -1,0 +1,387 @@
+/* ==========================================================================
+   TASKS PAGE ROOT WORKSPACE
+   ========================================================================== */
+.tasks-page {
+  flex: 1;
+  padding: 2.5rem 2.25rem;
+  min-width: 0;
+  background-color: var(--bg-main);
+}
+
+/* Dashboard Layout Base Overrides */
+.dashboard-layout-root {
+  display: flex;
+  min-height: 100vh;
+  background-color: var(--bg-main);
+}
+
+/* ==========================================================================
+   TOOLBAR GRID LAYOUT (The old .filters wrapper)
+   ========================================================================== */
+.filters-container-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap; /* Safely wraps elements cleanly if viewing screen scales down */
+  margin-bottom: 2rem;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+  padding: 1rem 1.25rem;
+  box-shadow: var(--shadow-sm);
+}
+
+/* ==========================================================================
+   SEARCH BAR COMPONENT OVERRIDES
+   ========================================================================== */
+.search-bar {
+  display: flex;
+  gap: 0.75rem;
+  flex: 1;
+  min-width: 260px;
+}
+
+.search-bar input {
+  flex: 1;
+  height: 42px; /* Set static height to guarantee vertical parity with search button */
+  padding: 0 1rem;
+  border: 1.5px solid var(--border-default);
+  border-radius: var(--radius-sm);
+  background: var(--bg-main);
+  color: var(--text-primary);
+  font-size: var(--fs-sm);
+  transition: all var(--transition-fast);
+}
+
+.search-bar input::placeholder {
+  color: var(--text-muted);
+}
+
+.search-bar input:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px var(--color-primary-soft);
+  background: var(--bg-surface);
+  outline: none;
+}
+
+.search-bar button {
+  background: var(--gradient-primary);
+  color: var(--text-light);
+  border: none;
+  width: 42px; /* Perfect square layout optimized for icons */
+  height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-sm);
+  font-size: var(--fs-md);
+  box-shadow: var(--shadow-sm);
+  transition: all var(--transition-base);
+  cursor: pointer;
+}
+
+.search-bar button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 78, 152, 0.35);
+  filter: brightness(1.05);
+}
+
+.search-bar button:active {
+  transform: translateY(0);
+}
+
+/* ==========================================================================
+   UPGRADED ACTION BUTTONS
+   ========================================================================== */
+.btn-add-task {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background: var(--gradient-primary);
+  color: var(--text-light);
+  border: none;
+  padding: 0.7rem 1.5rem;
+  height: 42px; /* Level out with the search component elements */
+  border-radius: var(--radius-sm);
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-semibold);
+  box-shadow: var(--shadow-sm);
+  transition: all var(--transition-base);
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.btn-add-task:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
+
+.btn-add-task:active {
+  transform: translateY(0);
+}
+
+/* ── Priority Filter Select ── */
+.filter-select {
+  padding: 0 1rem;
+  height: 42px;
+  border: 1.5px solid var(--border-default);
+  border-radius: var(--radius-sm);
+  background: var(--bg-main);
+  color: var(--text-primary);
+  font-size: var(--fs-sm);
+  transition: all var(--transition-fast);
+  cursor: pointer;
+  outline: none;
+}
+
+.filter-select:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px var(--color-primary-soft);
+}
+
+/* ==========================================================================
+   LOADING LIFECYCLE SHIMMER INDICATORS
+   ========================================================================== */
+.tasks-loading-shimmer-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  padding: 5rem 2rem;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+  color: var(--text-secondary);
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-medium);
+}
+
+.loading-spinner {
+  width: 32px;
+  height: 32px;
+  border: 3px solid var(--border-light);
+  border-top-color: var(--color-primary);
+  border-radius: var(--radius-full);
+  animation: spinnerRotate 0.8s linear infinite;
+}
+
+@keyframes spinnerRotate {
+  to { transform: rotate(360deg); }
+}
+
+/* ==========================================================================
+   DATA TABLE STRUCTURAL VIEWPORTS
+   ========================================================================== */
+.task-table {
+  width: 100%;
+  background: var(--bg-surface);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  border-collapse: collapse;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--border-light);
+}
+
+.task-table thead {
+  background: var(--bg-main);
+  border-bottom: 2px solid var(--border-light);
+}
+
+.task-table th {
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--ls-wide);
+  text-transform: uppercase;
+  color: var(--text-muted);
+  padding: 1rem 1.25rem;
+  text-align: left;
+  white-space: nowrap;
+}
+
+.task-table td {
+  padding: 1rem 1.25rem;
+  font-size: var(--fs-sm);
+  color: var(--text-secondary);
+  border-bottom: 1px solid var(--border-light);
+  vertical-align: middle;
+}
+
+.task-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.task-table tbody tr {
+  transition: background var(--transition-fast);
+}
+
+.task-table tbody tr:hover {
+  background: var(--bg-hover);
+}
+
+.task-table td:nth-child(2) {
+  font-weight: var(--fw-medium);
+  color: var(--text-primary);
+}
+
+/* ── Quick Completion Row States ── */
+.task-table tr.status-completed td:nth-child(2) {
+  text-decoration: line-through;
+  color: var(--text-muted);
+  opacity: 0.65;
+}
+
+/* ==========================================================================
+   QUICK COMPLETION CHECKBOX DESIGN SYSTEM
+   ========================================================================== */
+.quick-checkbox-container {
+  display: inline-block;
+  position: relative;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.quick-checkbox-container input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 20px;
+  width: 20px;
+  background-color: transparent;
+  border: 2px solid var(--border-default);
+  border-radius: var(--radius-full);
+  transition: all var(--transition-fast);
+}
+
+.quick-checkbox-container:hover input ~ .checkmark {
+  border-color: var(--color-primary);
+}
+
+.quick-checkbox-container input:checked ~ .checkmark {
+  background-color: var(--color-primary);
+  border-color: var(--color-primary);
+}
+
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+.quick-checkbox-container input:checked ~ .checkmark:after {
+  display: block;
+}
+
+.quick-checkbox-container .checkmark:after {
+  left: 6px;
+  top: 2px;
+  width: 5px;
+  height: 10px;
+  border: solid var(--text-light);
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+/* ==========================================================================
+   DYNAMIC SCHEDULING STATUS & PRIORITY BADGES
+   ========================================================================== */
+.priority, .status {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25rem 0.65rem;
+  border-radius: var(--radius-full);
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-semibold);
+  text-transform: uppercase;
+}
+
+/* Priority Accent Badges */
+.priority.low { background: var(--bg-main); color: var(--text-muted); border: 1px solid var(--border-default); }
+.priority.medium { background: #fff7ed; color: #ea580c; } /* Soft Orange */
+.priority.high { background: var(--danger-soft); color: var(--danger); }
+
+/* Status Accent Badges */
+.status.todo { background: var(--bg-hover); color: var(--text-secondary); }
+.status.in-progress { background: #eff6ff; color: #2563eb; } /* Soft Blue */
+.status.completed { background: #f0fdf4; color: #16a34a; } /* Soft Green */
+
+/* ==========================================================================
+   ROW ACTION BUTTON DESIGN SETS
+   ========================================================================== */
+.action-buttons {
+  display: inline-flex;
+  gap: 0.5rem;
+}
+
+.edit-btn,
+.delete-btn {
+  padding: 0.45rem 0.875rem;
+  border-radius: var(--radius-sm);
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-semibold);
+  transition: all var(--transition-fast);
+  cursor: pointer;
+}
+
+.edit-btn {
+  background: var(--bg-surface);
+  color: var(--text-primary);
+  border: 1px solid var(--border-default);
+}
+
+.edit-btn:hover {
+  background: var(--bg-hover);
+  border-color: var(--color-primary);
+  color: var(--color-primary-hover);
+}
+
+.delete-btn {
+  background: var(--danger-soft);
+  color: var(--danger);
+  border: 1px solid transparent;
+}
+
+.delete-btn:hover {
+  background: var(--danger);
+  color: var(--text-light);
+  box-shadow: var(--shadow-sm);
+}
+
+/* ==========================================================================
+   RESPONSIVE DESIGN SYSTEM MEDIA QUERY SCALES
+   ========================================================================== */
+@media (max-width: 992px) {
+  .filters-container-bar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .search-bar, 
+  .btn-add-task {
+    width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .tasks-page {
+    padding: 1.5rem 1.25rem;
+  }
+
+  .task-table {
+    display: block;
+    overflow-x: auto; /* Handles massive horizontal columns safely via scroll mechanics */
+    -webkit-overflow-scrolling: touch;
+  }
+}

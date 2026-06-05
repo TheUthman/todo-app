@@ -1,0 +1,410 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap");
+
+:root {
+  /* ===================================
+    BRAND COLORS
+  =================================== */
+  --color-primary: #004e98;
+  --color-primary-hover: #3a6ea5;
+  --color-primary-light: #5c8fc2;
+  --color-primary-soft: #f0f5fa;
+
+  --color-dark: #001f3f;
+  --color-dark-soft: #002b54;
+  --color-dark-muted: #1a3a5c;
+
+  /* ===================================
+    BACKGROUNDS
+  =================================== */
+  --bg-main: #ebebeb;
+  --bg-surface: #ffffff;
+  --bg-card: #ffffff;
+  --bg-sidebar: #ffffff;
+  --bg-hover: #f5f5f5;
+  --bg-selected: #e6eff7;
+
+  /* ===================================
+    TEXT
+  =================================== */
+  --text-primary: #001f3f;
+  --text-secondary: #58697d;
+  --text-muted: #8c9ba5;
+  --text-light: #ffffff;
+
+  /* ===================================
+    BORDERS
+  =================================== */
+  --border-light: #ebebeb;
+  --border-default: #c0c0c0;
+  --border-strong: #8c9ba5;
+
+  /* ===================================
+    SEMANTIC COLORS
+  =================================== */
+  --success: #22c55e;
+  --success-soft: #dcfce7;
+
+  --warning: #ff6700;
+  --warning-soft: #ffebe0;
+
+  --danger: #ef4444;
+  --danger-soft: #fee2e2;
+
+  --info: #3a6ea5;
+  --info-soft: #eef5fc;
+
+  --purple: #8b5cf6;
+  --purple-soft: #ede9fe;
+
+  /* ===================================
+    PRIORITY COLORS
+  =================================== */
+  --priority-high: #ef4444;
+  --priority-medium: #ff6700;
+  --priority-low: #22c55e;
+
+  /* ===================================
+    TASK STATUS
+  =================================== */
+  --status-todo: #8c9ba5;
+  --status-progress: #3a6ea5;
+  --status-completed: #22c55e;
+  --status-overdue: #ef4444;
+
+  /* ===================================
+    CATEGORY COLORS
+  =================================== */
+  --category-design: #3a6ea5;
+  --category-development: #004e98;
+  --category-documentation: #ff6700;
+  --category-marketing: #ec4899;
+  --category-personal: #22c55e;
+  --category-devops: #8b5cf6;
+
+  /* ===================================
+    SHADOWS
+  =================================== */
+  --shadow-sm: 0 2px 4px rgba(0, 78, 152, 0.05);
+  --shadow-md: 0 4px 12px rgba(0, 78, 152, 0.08);
+  --shadow-lg: 0 12px 30px rgba(0, 78, 152, 0.12);
+
+  /* ===================================
+    GRADIENTS
+  =================================== */
+  --gradient-primary: linear-gradient(135deg, #004e98 0%, #3a6ea5 100%);
+  --gradient-dark: linear-gradient(135deg, #001f3f 0%, #1a3a5c 100%);
+  --gradient-card: linear-gradient(180deg, #ffffff 0%, #ebebeb 100%);
+
+  /* ===================================
+    TYPOGRAPHY
+  =================================== */
+  --font-primary: "Inter", sans-serif;
+
+  --fw-regular: 400;
+  --fw-medium: 500;
+  --fw-semibold: 600;
+  --fw-bold: 700;
+  --fw-extrabold: 800;
+
+  --fs-xs: 0.75rem;
+  --fs-sm: 0.875rem;
+  --fs-md: 1rem;
+  --fs-lg: 1.125rem;
+  --fs-xl: 1.25rem;
+  --fs-2xl: 1.5rem;
+  --fs-3xl: 1.875rem;
+  --fs-4xl: 2.25rem;
+
+  --lh-tight: 1.2;
+  --lh-normal: 1.5;
+  --lh-relaxed: 1.8;
+
+  --ls-tight: -0.03em;
+  --ls-normal: 0;
+  --ls-wide: 0.05em;
+
+  /* ===================================
+    RADII
+  =================================== */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 20px;
+  --radius-2xl: 24px;
+  --radius-full: 9999px;
+
+  /* ===================================
+    TRANSITIONS
+  =================================== */
+  --transition-fast: 0.15s ease;
+  --transition-base: 0.25s ease;
+  --transition-slow: 0.4s ease;
+} 
+
+/* ==========================================================================
+   DARK THEME — Full Design Token Overrides
+   Applied via body.dark class (set by ThemeContext)
+   ========================================================================== */
+.dark {
+  /* ── Backgrounds (layered elevation) ── */
+  --bg-main:    #0d1117;   /* deepest level — page background */
+  --bg-surface: #161b22;   /* mid level — topbar, sidebar, modals */
+  --bg-card:    #1c2330;   /* raised cards & panels */
+  --bg-sidebar: #161b22;
+  --bg-hover:   #21283a;   /* interactive hover state */
+  --bg-selected:#1e3a5f;   /* selected/active highlight — blue tinted */
+
+  /* ── Text ── */
+  --text-primary:   #e6edf3;  /* near-white with slight warmth */
+  --text-secondary: #8b949e;  /* muted labels */
+  --text-muted:     #6e7681;  /* ghost / placeholder text */
+
+  /* ── Borders ── */
+  --border-light:   #21283a;  /* subtle dividers */
+  --border-default: #30363d;  /* standard borders */
+  --border-strong:  #484f58;  /* active / focus emphasis */
+
+  /* ── Shadows (darker ambient on dark bg) ── */
+  --shadow-sm: 0 2px 6px rgba(0, 0, 0, 0.35);
+  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.45);
+  --shadow-lg: 0 12px 40px rgba(0, 0, 0, 0.55);
+
+  /* ── Brand/Primary adjustments ── */
+  --color-primary:       #4d9de0;   /* brighter blue for dark bg readability */
+  --color-primary-hover: #6db3f2;
+  --color-primary-light: #89c4f4;
+  --color-primary-soft:  #1b3a5c;   /* dark blue tint for icon frames */
+
+  /* ── Semantic soft backgrounds (dark-compatible tints) ── */
+  --success-soft: #0d2a1a;
+  --warning-soft: #2a1800;
+  --danger-soft:  #2a0d0d;
+  --info-soft:    #0d1f36;
+  --purple-soft:  #1e1433;
+
+  /* ── Gradient updates ── */
+  --gradient-primary: linear-gradient(135deg, #1a5fa8 0%, #4d9de0 100%);
+  --gradient-dark:    linear-gradient(135deg, #0d1117 0%, #161b22 100%);
+  --gradient-card:    linear-gradient(180deg, #1c2330 0%, #161b22 100%);
+}
+
+/* ==========================================
+   RESET & BASE
+   ========================================== */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-primary);
+  font-size: var(--fs-md);
+  font-weight: var(--fw-regular);
+  line-height: var(--lh-normal);
+  color: var(--text-primary);
+  background: var(--bg-main);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transition:
+    background-color var(--transition-base),
+    color var(--transition-base);
+}
+
+a {
+  color: var(--color-primary);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+a:hover {
+  color: var(--color-primary-hover);
+}
+
+button {
+  font-family: var(--font-primary);
+  cursor: pointer;
+  transition: all var(--transition-base);
+}
+
+input,
+textarea,
+select {
+  font-family: var(--font-primary);
+  font-size: var(--fs-md);
+  outline: none;
+  transition:
+    border-color var(--transition-fast),
+    box-shadow var(--transition-fast);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: var(--fw-bold);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--ls-tight);
+  color: var(--text-primary);
+}
+
+/* ==========================================
+   SCROLLBAR
+   ========================================== */
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-main);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border-default);
+  border-radius: var(--radius-full);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--border-strong);
+}
+
+/* ==========================================================================
+   FILTER BAR LAYOUT
+   ========================================================================== */
+.filter-bar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-family: var(--font-primary);
+}
+
+.custom-select-wrapper {
+  position: relative;
+  min-width: 160px;
+}
+
+/* ==========================================================================
+   SELECT TRIGGER TRIGGER BUTTON
+   ========================================================================== */
+.custom-select-trigger {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  
+  /* Color & Architecture Matches */
+  background-color: var(--bg-card);
+  color: var(--text-primary);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-sm);
+  padding: 10px 14px;
+  
+  /* Typography Tokens */
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-medium);
+  letter-spacing: var(--ls-tight);
+  
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.custom-select-trigger:hover {
+  border-color: var(--color-primary);
+}
+
+/* Active Highlight Filter State */
+.custom-select-trigger.active {
+  border-color: var(--color-primary);
+  background-color: var(--bg-selected);
+  font-weight: var(--fw-semibold);
+}
+
+/* Chevron Layout Style */
+.arrow-icon {
+  font-size: var(--fs-xs);
+  color: var(--text-secondary);
+  transition: transform var(--transition-fast);
+}
+
+.arrow-icon.rotated {
+  transform: rotate(180deg);
+  color: var(--color-primary);
+}
+
+/* ==========================================================================
+   TRUE DOM OVERLAY MENU DROPDOWN
+   ========================================================================== */
+.custom-select-dropdown {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  width: 100%;
+  
+  /* Color & Architecture Matches */
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-sm);
+  padding: 6px 0;
+  margin: 0;
+  list-style: none;
+  
+  /* Depth Layering Matches */
+  box-shadow: var(--shadow-md);
+  z-index: 100;
+}
+
+/* ==========================================================================
+   MENU LIST SELECTION OPTIONS
+   ========================================================================== */
+.custom-select-option {
+  padding: 10px 14px;
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-regular);
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: background var(--transition-fast);
+}
+
+.custom-select-option:hover {
+  background-color: var(--bg-hover);
+  color: var(--color-primary-hover);
+}
+
+/* Matching Selected Node Highlighter */
+.custom-select-option.selected {
+  background-color: var(--bg-selected);
+  color: var(--color-primary);
+  font-weight: var(--fw-semibold);
+}
+
+/* ==========================================================================
+   CLEAR ACTION SELECTION RESET BUTTON
+   ========================================================================== */
+.clear-btn {
+  background: transparent;
+  border: none;
+  color: var(--danger);
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-medium);
+  letter-spacing: var(--ls-tight);
+  cursor: pointer;
+  padding: 8px 14px;
+  border-radius: var(--radius-sm);
+  transition: all var(--transition-fast);
+}
+
+.clear-btn:hover {
+  background-color: var(--danger-soft);
+}

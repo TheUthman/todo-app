@@ -1,0 +1,102 @@
+/* ==========================================
+   STAT CARD (Preserved Architecture)
+   ========================================== */
+
+.stat-card {
+  background: var(--bg-surface); /* Unified backplate context */
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-xl);
+  padding: 1.375rem 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  box-shadow: var(--shadow-sm);
+  transition: all var(--transition-base);
+  position: relative;
+  overflow: hidden;
+  cursor: default;
+}
+
+.stat-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--gradient-card);
+  opacity: 0;
+  transition: opacity var(--transition-base);
+  z-index: 0;
+}
+
+.stat-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-md);
+  /* Dynamically sets a crisp border focus color derived directly from your theme token variables */
+  border-color: rgba(from var(--card-accent-color) r g b / 0.35);
+}
+
+.stat-card:hover::before {
+  opacity: 1;
+}
+
+/* ── Modern Translucent Mask Icon Plate ── */
+.stat-icon,
+.stat-icon-wrapper {
+  width: 52px;
+  height: 52px;
+  border-radius: var(--radius-lg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  flex-shrink: 0;
+  position: relative;
+  z-index: 1;
+  
+  /* Modern CSS color modification engine reading the custom component property context */
+  background-color: rgba(from var(--card-accent-color) r g b / 0.12);
+  color: var(--card-accent-color);
+  transition: all var(--transition-base);
+}
+
+/* Accent shift when hovering over card elements */
+.stat-card:hover .stat-icon,
+.stat-card:hover .stat-icon-wrapper {
+  background-color: var(--card-accent-color);
+  color: var(--text-light);
+  box-shadow: 0 4px 12px rgba(from var(--card-accent-color) r g b / 0.25);
+}
+
+/* ── Info & Typography Control (Preserved Layout Styles) ── */
+.stat-info,
+.stat-info-payload {
+  position: relative;
+  z-index: 1;
+  min-width: 0;
+}
+
+.stat-info h3,
+.stat-info-payload h3 {
+  margin: 0;
+  font-size: var(--fs-3xl);
+  font-weight: var(--fw-extrabold);
+  letter-spacing: var(--ls-tight);
+  color: var(--text-primary);
+  line-height: var(--lh-tight);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.stat-info p,
+.stat-info-payload p {
+  margin: 0;
+  margin-top: 0.25rem;
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-medium);
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: var(--ls-wide);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

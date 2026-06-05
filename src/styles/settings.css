@@ -1,0 +1,362 @@
+/* ==========================================
+   SETTINGS PAGE & INTERACTIVE COMPONENTS
+   ========================================== */
+
+.settings-page {
+  flex: 1;
+  padding: 2rem 2.25rem;
+  min-width: 0;
+}
+
+/* ── Settings Grid Layout ── */
+.settings-grid {
+  display: grid;
+  gap: 1.5rem;
+  max-width: 680px;
+  margin-top: 0.5rem;
+}
+
+/* ── Settings Card Componentry ── */
+.settings-card {
+  background: var(--bg-surface); /* Replaced var(--bg-card) for theme continuity */
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-2xl);
+  padding: 1.75rem;
+  box-shadow: var(--shadow-sm);
+  transition: all var(--transition-base);
+}
+
+.settings-card:hover {
+  box-shadow: var(--shadow-md);
+}
+
+.settings-card h3 {
+  font-size: var(--fs-md);
+  font-weight: var(--fw-semibold);
+  color: var(--text-primary);
+  margin: 0 0 1.25rem 0;
+  padding-bottom: 0.875rem;
+  border-bottom: 1px solid var(--border-light);
+  letter-spacing: var(--ls-tight);
+}
+
+/* ── Settings Wrapper Structure ── */
+.settings-card-content {
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── Individual Row Items ── */
+.setting-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* Ensures toggle switches snap perfectly to the edge */
+  gap: 1rem;
+  padding: 0.875rem 0;
+  border-bottom: 1px solid var(--border-light);
+}
+
+.setting-item:last-of-type,
+.setting-item:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+/* Preserves layout meta wrapping constraints */
+.setting-item-meta {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex: 1;
+  min-width: 0;
+}
+
+/* Replaced direct un-nested SVG overrides with crisp custom canvas frames */
+.setting-icon-frame {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  color: var(--color-primary);
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  background-color: var(--color-primary-soft);
+  border-radius: var(--radius-md);
+}
+
+.setting-label-block {
+  display: flex;
+  flex-direction: column;
+  gap: 0.125rem;
+  min-width: 0;
+}
+
+.setting-title {
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-semibold);
+  color: var(--text-primary);
+}
+
+.setting-value {
+  font-size: var(--fs-xs);
+  color: var(--text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ── Modern Toggle Switches (Slightly improved alignment variables) ── */
+.switch-toggle {
+  position: relative;
+  display: inline-block;
+  width: 44px;
+  height: 24px;
+  flex-shrink: 0;
+}
+
+.switch-toggle input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.switch-slider {
+  position: absolute;
+  cursor: pointer;
+  inset: 0;
+  background: var(--border-default);
+  border-radius: var(--radius-full);
+  transition: all var(--transition-base);
+}
+
+.switch-slider::before {
+  content: '';
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  left: 3px;
+  top: 3px;
+  background: var(--text-light);
+  border-radius: var(--radius-full);
+  transition: transform var(--transition-base);
+  box-shadow: var(--shadow-sm);
+}
+
+.switch-toggle input:checked + .switch-slider {
+  background: var(--gradient-primary);
+}
+
+.switch-toggle input:checked + .switch-slider::before {
+  transform: translateX(20px);
+}
+
+.switch-toggle input:focus + .switch-slider {
+  box-shadow: 0 0 0 3px rgba(0, 78, 152, 0.25);
+}
+
+/* ── Action Buttons Stack ── */
+.settings-actions-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 0.875rem;
+}
+
+.settings-action-btn,
+.settings-logout-btn {
+  width: 100%;
+  border: none;
+  border-radius: var(--radius-md);
+  padding: 0.875rem;
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-semibold);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  transition: all var(--transition-base);
+}
+
+.settings-action-btn {
+  background: var(--gradient-primary);
+  color: var(--text-light);
+  box-shadow: 0 4px 14px rgba(0, 78, 152, 0.25);
+}
+
+.settings-action-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(0, 78, 152, 0.35);
+  filter: brightness(1.03);
+}
+
+.settings-logout-btn {
+  background: var(--danger-soft);
+  color: var(--danger);
+  border: 1.5px solid rgba(239, 68, 68, 0.2);
+}
+
+.settings-logout-btn:hover {
+  background: var(--danger);
+  color: var(--text-light);
+  border-color: var(--danger);
+  box-shadow: 0 4px 14px rgba(239, 68, 68, 0.25);
+  transform: translateY(-2px);
+}
+
+/* ── Full-Page Loading Preferred Layout Accent ── */
+.settings-loading-viewport {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 50vh;
+  gap: 1rem;
+  color: var(--text-secondary);
+  font-size: var(--fs-sm);
+}
+
+/* ==========================================
+   RESPONSIVE LAYOUT CHANGES
+   ========================================== */
+@media (max-width: 768px) {
+  .settings-page {
+    padding: 1.25rem;
+  }
+  
+  .settings-card {
+    padding: 1.25rem;
+  }
+}
+/* ── Card Action Row Tuning ── */
+.card-header-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1.25rem;
+  border-bottom: 1px solid var(--border-light);
+}
+
+/* Strips h3 border down so it nests beside the edit trigger button smoothly */
+.card-header-actions h3 {
+  border-bottom: none;
+  padding-bottom: 0;
+  margin-bottom: 1.25rem;
+}
+
+.settings-text-edit-btn {
+  background: none;
+  border: none;
+  color: var(--color-primary);
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-bold);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 4px 8px;
+  border-radius: var(--radius-sm);
+  transition: all var(--transition-fast);
+}
+
+.settings-text-edit-btn:hover {
+  background-color: var(--color-primary-soft);
+  color: var(--color-primary-hover);
+}
+
+/* ── Inline Input Fields ── */
+.settings-inline-input {
+  width: 100%;
+  max-width: 320px;
+  background-color: var(--bg-main);
+  border: 1px solid var(--border-default);
+  color: var(--text-primary);
+  border-radius: var(--radius-md);
+  padding: 0.5rem 0.75rem;
+  font-size: var(--fs-sm);
+  font-family: inherit;
+  margin-top: 0.25rem;
+  transition: all var(--transition-fast);
+}
+
+.settings-inline-input:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(0, 78, 152, 0.15);
+}
+
+/* ── Inline Feedback Banners ── */
+.settings-banner {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 10px 14px;
+  border-radius: var(--radius-md);
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-semibold);
+  margin-bottom: 1.25rem;
+  animation: float 0.2s ease-out;
+}
+
+.settings-banner.error-banner {
+  background-color: var(--danger-soft);
+  color: var(--danger);
+}
+
+.settings-banner.success-banner {
+  background-color: var(--success-soft);
+  color: var(--success);
+}
+
+/* ── Save / Cancel Horizontal Grouping ── */
+.profile-edit-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  margin-top: 1.25rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--border-light);
+}
+
+.settings-cancel-btn,
+.settings-save-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.5rem 1rem;
+  border-radius: var(--radius-md);
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-bold);
+  cursor: pointer;
+  transition: all var(--transition-base);
+}
+
+.settings-cancel-btn {
+  background-color: var(--bg-main);
+  border: 1px solid var(--border-default);
+  color: var(--text-secondary);
+}
+
+.settings-cancel-btn:hover {
+  background-color: var(--bg-hover);
+  color: var(--text-primary);
+}
+
+.settings-save-btn {
+  background: var(--gradient-primary);
+  border: none;
+  color: var(--text-light);
+  box-shadow: 0 4px 12px rgba(0, 78, 152, 0.2);
+}
+
+.settings-save-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(0, 78, 152, 0.3);
+}
+
+.settings-cancel-btn:disabled,
+.settings-save-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}

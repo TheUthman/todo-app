@@ -1,0 +1,227 @@
+/* ==========================================================================
+   CATEGORIES WORKSPACE LAYOUT
+   ========================================================================== */
+
+.categories-page {
+  flex: 1;
+  padding: 2.5rem 2.25rem;
+  min-width: 0;
+  background-color: var(--bg-main);
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── Global Controls Bar (Sits neatly beneath Topbar) ── */
+.page-actions-bar {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 2rem;
+}
+
+/* ── Primary Action Button ── */
+.primary-action-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background: var(--gradient-primary);
+  color: var(--text-light);
+  border: none;
+  padding: 0.65rem 1.25rem;
+  height: 42px; /* Uniform height parity with search inputs */
+  border-radius: var(--radius-sm);
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-semibold);
+  box-shadow: var(--shadow-sm);
+  transition: all var(--transition-base);
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.primary-action-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+  filter: brightness(1.03);
+}
+
+.primary-action-btn:active {
+  transform: translateY(0);
+}
+
+/* ==========================================================================
+   CATEGORY CARDS PANEL GRID
+   ========================================================================== */
+
+.category-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+  gap: 1.5rem;
+}
+
+/* ── Category Card Structural Elements ── */
+.category-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+  padding: 1.5rem;
+  box-shadow: var(--shadow-sm);
+  transition: all var(--transition-base);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  cursor: default;
+}
+
+/* Accent Header Custom Top Border Effect */
+.category-card-top-border {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  opacity: 0.6;
+  transition: opacity var(--transition-base), height var(--transition-fast);
+  border-radius: var(--radius-md) var(--radius-md) 0 0;
+}
+
+.category-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--border-strong);
+}
+
+.category-card:hover .category-card-top-border {
+  opacity: 1;
+  height: 6px;
+}
+
+/* ── Card Accent Header Flexbox ── */
+.card-accent-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* ── Category Folders Icon Box ── */
+.category-icon-box {
+  width: 44px;
+  height: 44px;
+  background: var(--color-primary-soft);
+  color: var(--color-primary);
+  border-radius: var(--radius-sm);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.15rem;
+  transition: all var(--transition-base);
+}
+
+.category-card:hover .category-icon-box {
+  filter: brightness(0.85);
+  color: var(--text-light);
+}
+
+/* ── Card Interaction Actions Group ── */
+.category-card-actions {
+  display: flex;
+  gap: 6px;
+}
+
+.icon-action-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border: 1.5px solid var(--border-default);
+  background: var(--bg-main);
+  color: var(--text-muted);
+  border-radius: var(--radius-sm);
+  font-size: var(--fs-sm);
+  transition: all var(--transition-fast);
+  cursor: pointer;
+}
+
+.icon-action-btn:hover {
+  background: var(--bg-hover);
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
+.icon-action-btn.delete {
+  border-color: rgba(239, 68, 68, 0.15);
+  background: var(--danger-soft);
+  color: var(--danger);
+}
+
+.icon-action-btn.delete:hover {
+  background: var(--danger);
+  border-color: var(--danger);
+  color: var(--text-light);
+  box-shadow: 0 4px 10px rgba(239, 68, 68, 0.25);
+}
+
+/* ── Category Metadata Text Elements ── */
+.category-card-body h3 {
+  font-size: var(--fs-md);
+  font-weight: var(--fw-bold);
+  color: var(--text-primary);
+  margin: 0 0 0.35rem 0;
+}
+
+.task-count-indicator {
+  font-size: var(--fs-xs);
+  color: var(--text-secondary);
+  font-weight: var(--fw-medium);
+  margin: 0;
+}
+
+/* ==========================================================================
+   LOADING LIFECYCLE SPINNER CHANNELS
+   ========================================================================== */
+
+.categories-loading-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  padding: 6rem 2rem;
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+  color: var(--text-secondary);
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-medium);
+}
+
+/* ==========================================================================
+   RESPONSIVE DESIGN VIEWPORT SCALING
+   ========================================================================== */
+
+@media (max-width: 768px) {
+  .categories-page {
+    padding: 1.5rem 1.25rem;
+  }
+
+  .category-grid {
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .category-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .page-actions-bar {
+    width: 100%;
+  }
+
+  .primary-action-btn {
+    width: 100%;
+  }
+}
