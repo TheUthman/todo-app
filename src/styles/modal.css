@@ -228,9 +228,10 @@
 .modal-container {
   background-color: var(--bg-surface);
   width: 100%;
-  max-width: 540px;
-  border-radius: var(--radius-md);
+  max-width: 520px;
+  border-radius: var(--radius-xl);
   box-shadow: var(--shadow-lg);
+  border: 1px solid var(--border-light);
   overflow: hidden;
   animation: modalEnter var(--transition-fast) ease-out;
 }
@@ -245,7 +246,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 20px 24px;
+  padding: var(--space-6) var(--space-7);
   border-bottom: 1px solid var(--border-light);
 }
 
@@ -276,10 +277,10 @@
 
 /* Form Structural Core Layout */
 .modal-form {
-  padding: 24px;
+  padding: var(--space-7);
   display: flex;
   flex-direction: column;
-  gap: 18px;
+  gap: var(--space-5);
 }
 
 .form-group {
@@ -306,13 +307,20 @@
 /* Unified Inputs Styling */
 .form-input {
   width: 100%;
-  padding: 10px 14px;
-  border: 1px solid var(--border-default);
-  border-radius: var(--radius-sm);
+  height: 48px;
+  padding: 0 1rem;
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
   color: var(--text-primary);
   background-color: var(--bg-surface);
   font-size: var(--fs-sm);
   transition: all var(--transition-fast);
+}
+
+.form-input.text-area-input {
+  height: auto;
+  min-height: 96px;
+  padding: var(--space-3) var(--space-4);
 }
 
 .form-input:focus {
@@ -334,21 +342,21 @@
 .custom-tile-group {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 6px;
-  background-color: var(--bg-main);
-  padding: 4px;
-  border-radius: var(--radius-sm);
+  gap: var(--space-2);
+  background-color: var(--bg-hover);
+  padding: var(--space-1);
+  border-radius: var(--radius-md);
   border: 1px solid var(--border-light);
 }
 
 .tile-btn {
   border: none;
   background: transparent;
-  padding: 8px 4px;
+  padding: 0.65rem var(--space-2);
   font-size: var(--fs-xs);
   font-weight: var(--fw-medium);
   color: var(--text-secondary);
-  border-radius: calc(var(--radius-sm) - 4px);
+  border-radius: var(--radius-full);
   text-transform: capitalize;
 }
 

@@ -2,7 +2,13 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { login as apiLogin } from "../services/authService";
 import { useUser } from "../contexts/UserContext";
-import { FaUser, FaLock, FaEye, FaEyeSlash, FaExclamationCircle } from "react-icons/fa";
+import {
+  FaUser,
+  FaLock,
+  FaEye,
+  FaEyeSlash,
+  FaExclamationCircle,
+} from "react-icons/fa";
 import loginIllustration from "../assets/login_illustration.png";
 import "../styles/auth.css";
 
@@ -17,73 +23,111 @@ export default function Login() {
 
   // Clean state tracking that flushes errors when modifications begin
   const handleInputChange = (field, val) => {
-    if (error) setError(""); 
+    if (error) setError("");
     setForm((prev) => ({ ...prev, [field]: val }));
   };
 
   const handleSubmit = async (e) => {
-  e.preventDefault();
-  if (!form.username.trim() || !form.password) return;
+    e.preventDefault();
+    if (!form.username.trim() || !form.password) return;
 
-  try {
-    setLoading(true);
-    setError("");
+    try {
+      setLoading(true);
+      setError("");
 
-    const res = await apiLogin(form);
-    
-    const token = res.token;
+      const res = await apiLogin(form);
 
-    if (!token) {
-      setError("Authentication failed: Token missing from server response.");
-      return;
+      const token = res.token;
+
+      if (!token) {
+        setError("Authentication failed: Token missing from server response.");
+        return;
+      }
+
+      // 2. CRITICAL: Reconstruct the nested 'user' object structure your frontend expects
+      const userProfile = {
+        username: res.username,
+        email: res.email,
+        role: res.role,
+      };
+
+      // 3. Save the string token cleanly to disk
+      localStorage.setItem("token", token);
+
+      // 4. Update the UserContext with the perfectly mapped nested layout payload
+      login({
+        token: token,
+        user: userProfile,
+      });
+
+      // 5. Navigate cleanly to your workspace
+      navigate("/dashboard");
+    } catch (err) {
+      console.error("Login Error details:", err);
+      setError(
+        err.response?.data?.message ||
+          err.response?.data?.error ||
+          "Invalid username or password. Please try again.",
+      );
+    } finally {
+      setLoading(false);
     }
-
-    // 2. CRITICAL: Reconstruct the nested 'user' object structure your frontend expects
-    const userProfile = {
-      username: res.username,
-      email: res.email,
-      role: res.role
-    };
-
-    // 3. Save the string token cleanly to disk
-    localStorage.setItem("token", token);
-    
-    // 4. Update the UserContext with the perfectly mapped nested layout payload
-    login({ 
-      token: token, 
-      user: userProfile 
-    }); 
-
-    // 5. Navigate cleanly to your workspace
-    navigate("/dashboard");
-
-  } catch (err) {
-    console.error("Login Error details:", err);
-    setError(
-      err.response?.data?.message || 
-      err.response?.data?.error || 
-      "Invalid username or password. Please try again."
-    );
-  } finally {
-    setLoading(false);
-  }
-};
+  };
 
   return (
     <div className="auth-page">
       <div className="auth-card">
-
         {/* Left Side: Illustration Panel */}
-        <div className="auth-illustration">
-          <div className="illustration-overlay"></div>
+        <div
+          className="auth-illustration"
+          style={{
+            background: "linear-gradient(135deg, #6366f1 0%, #4f46e5 100%)",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+            padding: "40px",
+            position: "relative",
+            overflow: "hidden",
+          }}
+        >
+          <div
+            className="illustration-overlay"
+            style={{
+              background: "rgba(0,0,0,0.05)",
+              position: "absolute",
+              inset: 0,
+            }}
+          ></div>
           <img
             src={loginIllustration}
             alt="Login illustration"
             className="floating-artwork"
+            style={{
+              width: "100%",
+              maxWidth: "320px",
+              filter:
+                "hue-rotate(220deg) brightness(1.1) drop-shadow(0 20px 40px rgba(0,0,0,0.2))",
+              zIndex: 1,
+            }}
           />
-          <div className="auth-brand">
-            <h2>TodoFlow</h2>
-            <p>Stay organized, stay ahead.</p>
+          <div
+            className="auth-brand"
+            style={{ textAlign: "center", zIndex: 1, marginTop: "2rem" }}
+          >
+            <h2
+              style={{
+                fontSize: "2.5rem",
+                fontWeight: "800",
+                color: "white",
+                marginBottom: "0.5rem",
+              }}
+            >
+              TodoFlow
+            </h2>
+            <p style={{ color: "rgba(255,255,255,0.8)", fontSize: "1.1rem" }}>
+              Stay organized, stay ahead.
+            </p>
           </div>
         </div>
 
@@ -102,7 +146,6 @@ export default function Login() {
           )}
 
           <form onSubmit={handleSubmit} className="actual-form-flow">
-            
             {/* Username Input Group */}
             <div className="auth-input-group">
               <label className="auth-input-label">Username</label>
@@ -115,7 +158,9 @@ export default function Login() {
                   disabled={loading}
                   className="auth-text-input"
                   value={form.username}
-                  onChange={(e) => handleInputChange("username", e.target.value)}
+                  onChange={(e) =>
+                    handleInputChange("username", e.target.value)
+                  }
                 />
               </div>
             </div>
@@ -132,7 +177,9 @@ export default function Login() {
                   disabled={loading}
                   className="auth-text-input password-field"
                   value={form.password}
-                  onChange={(e) => handleInputChange("password", e.target.value)}
+                  onChange={(e) =>
+                    handleInputChange("password", e.target.value)
+                  }
                 />
                 <button
                   type="button"
@@ -165,10 +212,11 @@ export default function Login() {
 
           <p className="switch-auth-link">
             Don't have an account?{" "}
-            <Link to="/register" className="premium-accent-link">Register here</Link>
+            <Link to="/register" className="premium-accent-link">
+              Register here
+            </Link>
           </p>
         </div>
-
       </div>
     </div>
   );

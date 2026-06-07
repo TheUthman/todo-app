@@ -2,8 +2,18 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { register } from "../services/authService";
 import { useUser } from "../contexts/UserContext";
-import { FaUser, FaEnvelope, FaLock, FaEye, FaEyeSlash, FaExclamationCircle, FaCheckCircle, FaTimesCircle } from "react-icons/fa";
-import registerIllustration from "../assets/register_illustration.png";
+import {
+  FaUser,
+  FaEnvelope,
+  FaLock,
+  FaEye,
+  FaEyeSlash,
+  FaExclamationCircle,
+  FaCheckCircle,
+  FaTimesCircle,
+  FaTasks,
+} from "react-icons/fa";
+// import registerIllustration from "../assets/register_illustration.png";
 import "../styles/auth.css";
 
 export default function Register() {
@@ -19,7 +29,7 @@ export default function Register() {
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  
+
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
@@ -32,7 +42,7 @@ export default function Register() {
   /* ── Password Strength Validation Logic ── */
   const getPasswordStrength = (pwd) => {
     if (!pwd) return { score: 0, label: "", color: "transparent" };
-    
+
     let score = 0;
     if (pwd.length >= 8) score++;
     if (/[A-Z]/.test(pwd)) score++;
@@ -47,7 +57,8 @@ export default function Register() {
   const strength = getPasswordStrength(form.password);
 
   /* ── Password Match Logic ── */
-  const passwordsMatch = form.password && form.password === form.confirmPassword;
+  const passwordsMatch =
+    form.password && form.password === form.confirmPassword;
   const showMatchStatus = form.confirmPassword.length > 0;
 
   const handleSubmit = async (e) => {
@@ -80,16 +91,16 @@ export default function Register() {
 
       if (res && res.token) {
         localStorage.setItem("token", res.token);
-        login(res); 
+        login(res);
         navigate("/dashboard");
       } else {
-        navigate("/login"); 
+        navigate("/login");
       }
     } catch (err) {
       setError(
         err.response?.data?.message ||
-        err.response?.data?.error ||
-        "Registration failed. Please check your inputs and try again."
+          err.response?.data?.error ||
+          "Registration failed. Please check your inputs and try again.",
       );
     } finally {
       setLoading(false);
@@ -99,13 +110,11 @@ export default function Register() {
   return (
     <div className="auth-page">
       <div className="auth-card">
-        
         {/* Left Side: Illustration Panel */}
         <div className="auth-illustration">
-          <img
-            src={registerIllustration}
-            alt="Register illustration"
-          />
+          <div style={{ display: "flex", alignItems: "center", justifyContent: "center", width: "100%", maxWidth: "350px" }}>
+            <FaTasks style={{ fontSize: "120px", color: "rgba(255,255,255,0.3)" }} />
+          </div>
           <div className="auth-brand">
             <h2>TodoFlow</h2>
             <p>Your productivity, elevated.</p>
@@ -127,7 +136,6 @@ export default function Register() {
           )}
 
           <form onSubmit={handleSubmit} className="actual-form-flow">
-            
             {/* Username Input Field */}
             <div className="auth-input-group">
               <label className="auth-input-label">Username</label>
@@ -138,7 +146,9 @@ export default function Register() {
                   placeholder="Choose a unique username"
                   className="auth-text-input"
                   value={form.username}
-                  onChange={(e) => handleInputChange("username", e.target.value)}
+                  onChange={(e) =>
+                    handleInputChange("username", e.target.value)
+                  }
                   disabled={loading}
                   required
                 />
@@ -172,7 +182,9 @@ export default function Register() {
                   placeholder="Create a strong password"
                   className="auth-text-input password-field"
                   value={form.password}
-                  onChange={(e) => handleInputChange("password", e.target.value)}
+                  onChange={(e) =>
+                    handleInputChange("password", e.target.value)
+                  }
                   disabled={loading}
                   required
                 />
@@ -189,17 +201,27 @@ export default function Register() {
 
               {/* Inline Password Strength Bar Indicators */}
               {form.password && (
-                <div className="pwd-strength-container" style={{ marginTop: "6px" }}>
+                <div
+                  className="pwd-strength-container"
+                  style={{ marginTop: "6px" }}
+                >
                   <div className="pwd-strength-bar-track">
-                    <div 
-                      className="pwd-strength-bar-fill" 
-                      style={{ 
-                        width: `${(strength.score / 4) * 100}%`, 
-                        backgroundColor: strength.color 
+                    <div
+                      className="pwd-strength-bar-fill"
+                      style={{
+                        width: `${(strength.score / 4) * 100}%`,
+                        backgroundColor: strength.color,
                       }}
                     />
                   </div>
-                  <span className="pwd-strength-label" style={{ color: strength.color, fontSize: "12px", fontWeight: "600" }}>
+                  <span
+                    className="pwd-strength-label"
+                    style={{
+                      color: strength.color,
+                      fontSize: "12px",
+                      fontWeight: "600",
+                    }}
+                  >
                     Password Strength: {strength.label}
                   </span>
                 </div>
@@ -216,7 +238,9 @@ export default function Register() {
                   placeholder="Confirm your password"
                   className="auth-text-input password-field"
                   value={form.confirmPassword}
-                  onChange={(e) => handleInputChange("confirmPassword", e.target.value)}
+                  onChange={(e) =>
+                    handleInputChange("confirmPassword", e.target.value)
+                  }
                   disabled={loading}
                   required
                 />
@@ -225,7 +249,9 @@ export default function Register() {
                   className="password-toggle-visibility-btn"
                   onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                   tabIndex="-1"
-                  aria-label={showConfirmPassword ? "Hide password" : "Show password"}
+                  aria-label={
+                    showConfirmPassword ? "Hide password" : "Show password"
+                  }
                 >
                   {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
                 </button>
@@ -233,15 +259,18 @@ export default function Register() {
 
               {/* Inline Password Match Badges */}
               {showMatchStatus && (
-                <div className="pwd-match-badge" style={{ 
-                  display: "flex", 
-                  alignItems: "center", 
-                  gap: "6px", 
-                  fontSize: "12px", 
-                  fontWeight: "500",
-                  color: passwordsMatch ? "#22c55e" : "#ef4444",
-                  marginTop: "6px"
-                }}>
+                <div
+                  className="pwd-match-badge"
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "6px",
+                    fontSize: "12px",
+                    fontWeight: "500",
+                    color: passwordsMatch ? "#22c55e" : "#ef4444",
+                    marginTop: "6px",
+                  }}
+                >
                   {passwordsMatch ? (
                     <>
                       <FaCheckCircle /> <span>Passwords match</span>
@@ -256,10 +285,14 @@ export default function Register() {
             </div>
 
             {/* Form Submission Systems */}
-            <button 
-              className="auth-submit-btn" 
-              type="submit" 
-              disabled={loading || (form.password && strength.score < 2) || (showMatchStatus && !passwordsMatch)}
+            <button
+              className="auth-submit-btn"
+              type="submit"
+              disabled={
+                loading ||
+                (form.password && strength.score < 2) ||
+                (showMatchStatus && !passwordsMatch)
+              }
             >
               {loading ? (
                 <div className="auth-btn-spinner-flow">
@@ -274,10 +307,11 @@ export default function Register() {
 
           <p className="switch-auth-link">
             Already have an account?
-            <Link to="/login" className="premium-accent-link">Sign In</Link>
+            <Link to="/login" className="premium-accent-link">
+              Sign In
+            </Link>
           </p>
         </div>
-        
       </div>
     </div>
   );

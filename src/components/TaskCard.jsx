@@ -1,53 +1,46 @@
+const formatLabel = (str) => {
+  if (!str) return "";
+  return str
+    .replace(/_/g, " ")
+    .toLowerCase()
+    .replace(/\b\w/g, (c) => c.toUpperCase());
+};
+
 export default function TaskCard({ task, onToggle }) {
   if (!task) return null;
 
-  // Format strings for clean human readability (e.g., IN_PROGRESS -> In Progress)
-  const formatLabel = (str) => {
-    if (!str) return "";
-    return str
-      .replace(/_/g, " ")
-      .toLowerCase()
-      .replace(/\b\w/g, (c) => c.toUpperCase());
-  };
+  const priorityClass = task.priority?.toLowerCase() || "low";
+  const statusClass = task.status?.toLowerCase().replace("_", "-") || "todo";
 
   return (
     <div className="task-card">
-      <div
-        style={{
-          display: "flex",
-          gap: "12px",
-          alignItems: "flex-start",
-          marginBottom: "12px",
-        }}
-      >
+      <div className="task-card-header">
         <label className="quick-checkbox-container">
           <input
             type="checkbox"
             checked={task.status === "COMPLETED"}
             onChange={onToggle}
           />
-          <span className="checkmark"></span>
+          <span className="checkmark" />
         </label>
-        <div>
+        <div className="task-card-content">
           <h4>{task.title || "Untitled Task"}</h4>
           {task.description && <p>{task.description}</p>}
         </div>
       </div>
 
-      {/* Structured flex alignment wrap layer */}
       <div className="task-card-badges">
         {task.priority && (
           <span
-            className={`priority ${task.priority.toUpperCase()}`}
+            className={`badge-priority ${priorityClass}`}
             aria-label={`Priority: ${task.priority}`}
           >
             {formatLabel(task.priority)}
           </span>
         )}
-
         {task.status && (
           <span
-            className={`status ${task.status.toUpperCase()}`}
+            className={`badge-status ${statusClass}`}
             aria-label={`Status: ${task.status}`}
           >
             {formatLabel(task.status)}

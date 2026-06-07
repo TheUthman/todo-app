@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/set-state-in-effect */
 import { useState, useEffect } from "react";
-import Sidebar from "../components/Sidebar";
 import Topbar from "../components/Topbar";
+import Card from "../components/Card";
 import {
   FaUser,
   FaEnvelope,
@@ -15,27 +15,25 @@ import {
   FaExclamationCircle,
   FaEye,
   FaEyeSlash
-} from "react-icons/fa"; 
+} from "react-icons/fa";
 import { useTheme } from "../contexts/ThemeContext";
 import { useUser } from "../contexts/UserContext";
-import { useNavigate } from "react-router-dom"; 
-import api from "../api"; 
+import { useNavigate } from "react-router-dom";
+import api from "../api";
 import "../styles/settings.css";
 import "../styles/modal.css";
 
 export default function Settings() {
-  const { theme, toggleTheme } = useTheme(); 
-  const { user, logout, loading, login } = useUser(); 
+  const { theme, toggleTheme } = useTheme();
+  const { user, logout, loading, login } = useUser();
   const navigate = useNavigate();
 
-  // Profile Form States
   const [isEditingProfile, setIsEditingProfile] = useState(false);
   const [profileForm, setProfileForm] = useState({ username: "", email: "" });
   const [updateLoading, setUpdateLoading] = useState(false);
   const [formError, setFormError] = useState("");
   const [formSuccess, setFormSuccess] = useState(false);
 
-  // Password Change States
   const [showPasswordModal, setShowPasswordModal] = useState(false);
   const [passwordForm, setPasswordForm] = useState({ currentPassword: "", newPassword: "", confirmPassword: "" });
   const [passwordLoading, setPasswordLoading] = useState(false);
@@ -56,15 +54,15 @@ export default function Settings() {
   if (loading) {
     return (
       <div className="settings-loading-viewport">
-        <div className="spinner-dot"></div>
+        <div className="spinner-dot" />
         <p>Loading your preferences...</p>
       </div>
     );
   }
 
   const handleLogout = () => {
-    logout(); 
-    navigate("/login"); 
+    logout();
+    navigate("/login");
   };
 
   const handleProfileUpdate = async (e) => {
@@ -125,7 +123,7 @@ export default function Settings() {
 
     try {
       setPasswordLoading(true);
-      
+
       await api.post("/users/change-password", {
         currentPassword: passwordForm.currentPassword,
         newPassword: passwordForm.newPassword
@@ -133,7 +131,7 @@ export default function Settings() {
 
       setPasswordSuccess(true);
       setPasswordForm({ currentPassword: "", newPassword: "", confirmPassword: "" });
-      
+
       setTimeout(() => {
         setShowPasswordModal(false);
         setPasswordSuccess(false);
@@ -141,8 +139,8 @@ export default function Settings() {
 
     } catch (err) {
       setPasswordError(
-        err.response?.data?.message || 
-        err.response?.data?.error || 
+        err.response?.data?.message ||
+        err.response?.data?.error ||
         "Failed to change password. Verify your current password."
       );
     } finally {
@@ -157,153 +155,145 @@ export default function Settings() {
   };
 
   return (
-    <div className="dashboard">
-      <Sidebar />
+    <div className="page-content settings-page">
+      <Topbar title="Settings" subtitle="Manage your account preferences" />
 
-      <main className="settings-page">
-        <Topbar title="Settings" subtitle="Manage your account preferences" />
-
-        <div className="settings-grid">
-          {/* Profile Section */}
-          <div className="settings-card">
-            <div className="card-header-actions">
-              <h3>Profile Information</h3>
-              {!isEditingProfile && (
-                <button 
-                  className="settings-text-edit-btn"
-                  onClick={() => { setIsEditingProfile(true); setFormSuccess(false); }}
-                  type="button"
-                >
-                  <FaEdit /> Edit Profile
-                </button>
-              )}
-            </div>
-
-            {formError && (
-              <div className="settings-banner error-banner">
-                <FaExclamationCircle /> <span>{formError}</span>
-              </div>
-            )}
-
-            {formSuccess && (
-              <div className="settings-banner success-banner">
-                <FaCheck /> <span>Profile updated successfully!</span>
-              </div>
-            )}
-
-            <form onSubmit={handleProfileUpdate} className="settings-card-content">
-              <div className="setting-item">
-                <div className="setting-item-meta">
-                  <div className="setting-icon-frame"><FaUser /></div>
-                  <div className="setting-label-block">
-                    <span className="setting-title">Username</span>
-                    {isEditingProfile ? (
-                      <input 
-                        type="text" 
-                        className="settings-inline-input"
-                        value={profileForm.username}
-                        onChange={(e) => setProfileForm({ ...profileForm, username: e.target.value })}
-                        disabled={updateLoading}
-                        required
-                      />
-                    ) : (
-                      <span className="setting-value">{user?.username || "Guest User"}</span>
-                    )}
-                  </div>
-                </div>
-              </div>
-
-              <div className="setting-item">
-                <div className="setting-item-meta">
-                  <div className="setting-icon-frame"><FaEnvelope /></div>
-                  <div className="setting-label-block">
-                    <span className="setting-title">Email Address</span>
-                    {isEditingProfile ? (
-                      <input 
-                        type="email" 
-                        className="settings-inline-input"
-                        value={profileForm.email}
-                        onChange={(e) => setProfileForm({ ...profileForm, email: e.target.value })}
-                        disabled={updateLoading}
-                        required
-                      />
-                    ) : (
-                      <span className="setting-value">{user?.email || "No email provided"}</span>
-                    )}
-                  </div>
-                </div>
-              </div>
-
-              {isEditingProfile && (
-                <div className="profile-edit-actions">
-                  <button type="button" className="settings-cancel-btn" onClick={cancelEditing} disabled={updateLoading}>
-                    <FaTimes /> Cancel
-                  </button>
-                  <button type="submit" className="settings-save-btn" disabled={updateLoading}>
-                    <FaCheck /> {updateLoading ? "Saving..." : "Save Changes"}
-                  </button>
-                </div>
-              )}
-            </form>
-          </div>
-
-          {/* Preferences Section */}
-          <div className="settings-card">
-            <h3>Preferences</h3>
-            <div className="settings-card-content">
-              <div className="setting-item interactive-row">
-                <div className="setting-item-meta">
-                  <div className="setting-icon-frame"><FaBell /></div>
-                  <div className="setting-label-block">
-                    <span className="setting-title">Push Notifications</span>
-                    <span className="setting-value">Get real-time updates on close deadlines</span>
-                  </div>
-                </div>
-                <label className="switch-toggle" htmlFor="notify-toggle">
-                  <input type="checkbox" id="notify-toggle" />
-                  <span className="switch-slider"></span>
-                </label>
-              </div>
-
-              <div className="setting-item interactive-row">
-                <div className="setting-item-meta">
-                  <div className="setting-icon-frame"><FaMoon /></div>
-                  <div className="setting-label-block">
-                    <span className="setting-title">Dark Mode Theme</span>
-                    <span className="setting-value">Switch application palette to dark mode</span>
-                  </div>
-                </div>
-                <label className="switch-toggle" htmlFor="darkmode-toggle">
-                  <input type="checkbox" id="darkmode-toggle" checked={theme === 'dark'} onChange={toggleTheme} />
-                  <span className="switch-slider"></span>
-                </label>
-              </div>
-            </div>
-          </div>
-
-          {/* Security & System Actions */}
-          <div className="settings-card">
-            <h3>Security & Session</h3>
-            <div className="settings-actions-stack">
-              <button 
-                className="settings-action-btn" 
+      <div className="settings-grid">
+        <Card className="settings-card">
+          <div className="card-header-actions">
+            <h3>Profile Information</h3>
+            {!isEditingProfile && (
+              <button
+                className="settings-text-edit-btn"
+                onClick={() => { setIsEditingProfile(true); setFormSuccess(false); }}
                 type="button"
-                onClick={() => { setShowPasswordModal(true); setPasswordError(""); setPasswordSuccess(false); }}
               >
-                <FaLock />
-                <span>Change Password</span>
+                <FaEdit /> Edit Profile
               </button>
+            )}
+          </div>
 
-              <button className="settings-logout-btn" onClick={handleLogout} type="button">
-                <FaSignOutAlt />
-                <span>Logout from Account</span>
-              </button>
+          {formError && (
+            <div className="settings-banner error-banner">
+              <FaExclamationCircle /> <span>{formError}</span>
+            </div>
+          )}
+
+          {formSuccess && (
+            <div className="settings-banner success-banner">
+              <FaCheck /> <span>Profile updated successfully!</span>
+            </div>
+          )}
+
+          <form onSubmit={handleProfileUpdate} className="settings-card-content">
+            <div className="setting-item">
+              <div className="setting-item-meta">
+                <div className="setting-icon-frame"><FaUser /></div>
+                <div className="setting-label-block">
+                  <span className="setting-title">Username</span>
+                  {isEditingProfile ? (
+                    <input
+                      type="text"
+                      className="settings-inline-input"
+                      value={profileForm.username}
+                      onChange={(e) => setProfileForm({ ...profileForm, username: e.target.value })}
+                      disabled={updateLoading}
+                      required
+                    />
+                  ) : (
+                    <span className="setting-value">{user?.username || "Guest User"}</span>
+                  )}
+                </div>
+              </div>
+            </div>
+
+            <div className="setting-item">
+              <div className="setting-item-meta">
+                <div className="setting-icon-frame"><FaEnvelope /></div>
+                <div className="setting-label-block">
+                  <span className="setting-title">Email Address</span>
+                  {isEditingProfile ? (
+                    <input
+                      type="email"
+                      className="settings-inline-input"
+                      value={profileForm.email}
+                      onChange={(e) => setProfileForm({ ...profileForm, email: e.target.value })}
+                      disabled={updateLoading}
+                      required
+                    />
+                  ) : (
+                    <span className="setting-value">{user?.email || "No email provided"}</span>
+                  )}
+                </div>
+              </div>
+            </div>
+
+            {isEditingProfile && (
+              <div className="profile-edit-actions">
+                <button type="button" className="settings-cancel-btn" onClick={cancelEditing} disabled={updateLoading}>
+                  <FaTimes /> Cancel
+                </button>
+                <button type="submit" className="settings-save-btn" disabled={updateLoading}>
+                  <FaCheck /> {updateLoading ? "Saving..." : "Save Changes"}
+                </button>
+              </div>
+            )}
+          </form>
+        </Card>
+
+        <Card className="settings-card">
+          <h3>Preferences</h3>
+          <div className="settings-card-content">
+            <div className="setting-item interactive-row">
+              <div className="setting-item-meta">
+                <div className="setting-icon-frame"><FaBell /></div>
+                <div className="setting-label-block">
+                  <span className="setting-title">Push Notifications</span>
+                  <span className="setting-value">Get real-time updates on close deadlines</span>
+                </div>
+              </div>
+              <label className="switch-toggle" htmlFor="notify-toggle">
+                <input type="checkbox" id="notify-toggle" />
+                <span className="switch-slider" />
+              </label>
+            </div>
+
+            <div className="setting-item interactive-row">
+              <div className="setting-item-meta">
+                <div className="setting-icon-frame"><FaMoon /></div>
+                <div className="setting-label-block">
+                  <span className="setting-title">Dark Mode Theme</span>
+                  <span className="setting-value">Switch application palette to dark mode</span>
+                </div>
+              </div>
+              <label className="switch-toggle" htmlFor="darkmode-toggle">
+                <input type="checkbox" id="darkmode-toggle" checked={theme === 'dark'} onChange={toggleTheme} />
+                <span className="switch-slider" />
+              </label>
             </div>
           </div>
-        </div>
-      </main>
+        </Card>
 
-      {/* ── MATCHED MODAL VIEWPORT OVERLAY CANVAS LAYER ── */}
+        <Card className="settings-card">
+          <h3>Security & Session</h3>
+          <div className="settings-actions-stack">
+            <button
+              className="settings-action-btn"
+              type="button"
+              onClick={() => { setShowPasswordModal(true); setPasswordError(""); setPasswordSuccess(false); }}
+            >
+              <FaLock />
+              <span>Change Password</span>
+            </button>
+
+            <button className="settings-logout-btn" onClick={handleLogout} type="button">
+              <FaSignOutAlt />
+              <span>Logout from Account</span>
+            </button>
+          </div>
+        </Card>
+      </div>
+
       {showPasswordModal && (
         <div className="modal-overlay">
           <div className="modal-container">
@@ -312,8 +302,8 @@ export default function Settings() {
                 <h2>Update Password</h2>
                 <div className="modal-subtitle">Ensure your account remains safe and resilient</div>
               </div>
-              <button 
-                className="close-btn" 
+              <button
+                className="close-btn"
                 onClick={() => setShowPasswordModal(false)}
                 disabled={passwordLoading}
                 type="button"
@@ -323,13 +313,13 @@ export default function Settings() {
             </div>
 
             {passwordError && (
-              <div className="settings-banner error-banner" style={{ margin: "0 24px" }}>
+              <div className="settings-banner error-banner modal-banner">
                 <FaExclamationCircle /> <span>{passwordError}</span>
               </div>
             )}
 
             {passwordSuccess && (
-              <div className="settings-banner success-banner" style={{ margin: "0 24px" }}>
+              <div className="settings-banner success-banner modal-banner">
                 <FaCheck /> <span>Password updated successfully!</span>
               </div>
             )}
@@ -338,7 +328,7 @@ export default function Settings() {
               <div className="form-group">
                 <label className="form-label">Current Password</label>
                 <div className="modal-pwd-input-wrapper">
-                  <input 
+                  <input
                     type={revealCurrent ? "text" : "password"}
                     className="form-input"
                     placeholder="Enter current application password"
@@ -356,7 +346,7 @@ export default function Settings() {
               <div className="form-group">
                 <label className="form-label">New Password</label>
                 <div className="modal-pwd-input-wrapper">
-                  <input 
+                  <input
                     type={revealNew ? "text" : "password"}
                     className="form-input"
                     placeholder="Minimum 6 complex characters"
@@ -373,7 +363,7 @@ export default function Settings() {
 
               <div className="form-group">
                 <label className="form-label">Confirm New Password</label>
-                <input 
+                <input
                   type="password"
                   className="form-input"
                   placeholder="Repeat new password"
@@ -385,16 +375,16 @@ export default function Settings() {
               </div>
 
               <div className="modal-actions-footer">
-                <button 
-                  type="button" 
+                <button
+                  type="button"
                   className="cancel-action-btn"
                   onClick={() => setShowPasswordModal(false)}
                   disabled={passwordLoading}
                 >
                   Cancel
                 </button>
-                <button 
-                  type="submit" 
+                <button
+                  type="submit"
                   className="save-action-btn"
                   disabled={passwordLoading}
                 >

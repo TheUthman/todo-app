@@ -90,10 +90,11 @@ export default function Dashboard() {
   };
 
   return (
-    <div className="dashboard">
-      <Sidebar />
-
-      <main className="main-content">
+    <div className="dashboard" style={{ display: "flex", width: "100%" }}>
+      <main
+        className="main-content"
+        style={{ flex: 1, minWidth: 0, transition: "all 0.3s ease" }}
+      >
         <Topbar
           title="Dashboard"
           subtitle="Welcome back! Here's what's happening."

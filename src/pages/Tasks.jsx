@@ -1,9 +1,8 @@
 /* eslint-disable react-hooks/immutability */
 import { useEffect, useState, useMemo } from "react";
-import Sidebar from "../components/Sidebar";
 import Topbar from "../components/Topbar";
 import SearchBar from "../components/SearchBar";
-import TaskTable from "../components/TaskTable";
+import TaskList from "../components/TaskList";
 import AddTaskModal from "../components/AddTaskModal";
 import EditTaskModal from "../components/EditTaskModal";
 import EmptyState from "../components/EmptyState";
@@ -18,7 +17,6 @@ export default function Tasks() {
   const [searchQuery, setSearchQuery] = useState("");
   const [loading, setLoading] = useState(true);
 
-  // Modal Workspace Tracking Hooks
   const [showAddModal, setShowAddModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
   const [taskToEdit, setTaskToEdit] = useState(null);
@@ -42,23 +40,19 @@ export default function Tasks() {
 
   const handleToggleComplete = async (task) => {
     const originalStatus = task.status;
-    console.log(`Toggling task ID ${task.id} status from ${originalStatus}...`);
     const nextStatus = originalStatus === "COMPLETED" ? "TODO" : "COMPLETED";
 
-    // 1. Update UI state instantly for zero-latency response
     setTasks((prevTasks) =>
       prevTasks.map((t) => (t.id === task.id ? { ...t, status: nextStatus } : t))
     );
 
     try {
-      // 2. Sync to API backend in the background
       await api.put(`/tasks/${task.id}`, {
         ...task,
         status: nextStatus,
       });
     } catch (err) {
       console.error("Failed to commit task status flip modification:", err);
-      // Rollback to original state if the API pipeline drops out or fails
       setTasks((prevTasks) =>
         prevTasks.map((t) => (t.id === task.id ? { ...t, status: originalStatus } : t))
       );
@@ -81,7 +75,6 @@ export default function Tasks() {
     }
   };
 
-  // Fast Client-Side Realtime Dynamic Filtration Loop
   const filteredTasks = useMemo(() => {
     return tasks.filter((task) =>
       task.title?.toLowerCase().includes(searchQuery.toLowerCase())
@@ -89,54 +82,47 @@ export default function Tasks() {
   }, [tasks, searchQuery]);
 
   return (
-    <div className="dashboard-layout-root">
-      <Sidebar />
+    <div className="page-content tasks-page">
+      <Topbar
+        title="Tasks"
+        subtitle="Keep tabs on priorities and lifecycle schedules"
+      />
 
-      <main className="tasks-page">
-        <Topbar
-          title="Tasks"
-          subtitle="Keep tabs on priorities and lifecycle schedules"
+      <div className="page-toolbar">
+        <SearchBar
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          placeholder="Search tasks by title..."
         />
+        <button className="btn-add-task" onClick={() => setShowAddModal(true)}>
+          <FaPlus />
+          <span>Add Task</span>
+        </button>
+      </div>
 
-        {/* Global Filter & Command Bar Toolbar wrapper */}
-        <div className="filters-container-bar">
-          <SearchBar
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="Search tasks instantly by title..."
-          />
-          <button className="btn-add-task" onClick={() => setShowAddModal(true)}>
-            <FaPlus />
-            <span>Add Task</span>
-          </button>
+      {loading ? (
+        <div className="tasks-loading-shimmer-wrapper">
+          <div className="loading-spinner" />
+          <p>Syncing task workflow streams...</p>
         </div>
+      ) : filteredTasks.length > 0 ? (
+        <TaskList
+          tasks={filteredTasks}
+          onEdit={handleEditClick}
+          onDelete={(id) => setConfirmDeleteTaskId(id)}
+          onToggleComplete={handleToggleComplete}
+        />
+      ) : (
+        <EmptyState
+          title={searchQuery ? "No search matches found" : "No tasks documented yet"}
+          description={
+            searchQuery
+              ? "Try checking your syntax or clear the search criteria input field."
+              : "Get started by logging a fresh task entry using the button above."
+          }
+        />
+      )}
 
-        {/* Workspace Conditional Viewport Logic */}
-        {loading ? (
-          <div className="tasks-loading-shimmer-wrapper">
-            <div className="loading-spinner"></div>
-            <p>Syncing task workflow streams...</p>
-          </div>
-        ) : filteredTasks.length > 0 ? (
-          <TaskTable
-            tasks={filteredTasks}
-            onEdit={handleEditClick}
-            onDelete={(id) => setConfirmDeleteTaskId(id)}
-            onToggleComplete={handleToggleComplete} // Injected Quick Toggle prop
-          />
-        ) : (
-          <EmptyState
-            title={searchQuery ? "No search matches found" : "No tasks documented yet"}
-            description={
-              searchQuery
-                ? "Try checking your syntax or clear the search criteria input field."
-                : "Get started by logging a fresh task entry using the button above."
-            }
-          />
-        )}
-      </main>
-
-      {/* Action Modals System Hooks Layouts */}
       <AddTaskModal
         open={showAddModal}
         onClose={() => setShowAddModal(false)}

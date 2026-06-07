@@ -3,36 +3,32 @@
    ========================================== */
 
 .sidebar {
-  width: 260px;
-  min-width: 260px;
+  width: 280px;
+  min-width: 280px;
   background: var(--bg-sidebar);
   border-right: 1px solid var(--border-light);
-  padding: 1.75rem 1.25rem;
+  padding: var(--space-8) var(--space-5);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  gap: 2rem;
+  gap: var(--space-8);
   min-height: 100vh;
   position: sticky;
   top: 0;
-  box-shadow: var(--shadow-sm);
   z-index: 10;
 }
 
-/* ── Logo ── */
 .logo {
   display: flex;
   align-items: center;
-  gap: 0.625rem;
-  padding: 0 0.5rem;
-  margin-bottom: 0.5rem;
+  gap: var(--space-3);
+  padding: 0 var(--space-2);
+  margin-bottom: var(--space-4);
 }
 
 .logo-icon {
-  width: 36px;
-  height: 36px;
-  border-radius: var(--radius-md);
-  background: var(--gradient-primary);
+  width: 40px;
+  height: 40px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -40,7 +36,40 @@
   font-size: var(--fs-lg);
   font-weight: var(--fw-extrabold);
   flex-shrink: 0;
-  box-shadow: 0 4px 12px rgba(0, 78, 152, 0.35);
+  box-shadow: var(--shadow-sm);
+  position: relative;
+
+  /* 1. Masking shape to leave straight sides and horizontal wave curves */
+  clip-path: polygon(
+    0% 15%,     /* Top Left corner */
+    35% 0%,     /* Crest peak start */
+    65% 15%,    /* Trough center */
+    100% 0%,    /* Top Right corner */
+    100% 85%,   /* Bottom Right corner */
+    65% 100%,   /* Inverse crest valley */
+    35% 85%,    /* Inverse crest hump */
+    0% 100%     /* Bottom Left corner */
+  );
+
+  /* 2. Seamless rolling gradient effect using custom app variable hooks */
+  background: linear-gradient(
+    270deg,
+    var(--color-primary, #4f46e5),
+    #06b6d4,
+    #3b82f6,
+    var(--color-primary, #4f46e5)
+  );
+  background-size: 400% 100%;
+  animation: flowWave 6s linear infinite;
+}
+
+.logo-icon span {
+  color: black;
+  position: absolute;
+  /* Replaced brittle hardcoded left positioning with percentages 
+     so text scales symmetrically inside the newly distorted layout container */
+  left: 55%; 
+  top: 24%;
 }
 
 .logo-text {
@@ -55,12 +84,12 @@
   color: var(--color-primary);
 }
 
-/* ── Nav ── */
 .sidebar-nav {
   display: flex;
   flex-direction: column;
-  gap: 0.25rem;
+  gap: var(--space-1);
   flex: 1;
+  /* width: 100%; */
 }
 
 .nav-section-label {
@@ -69,29 +98,30 @@
   letter-spacing: var(--ls-wide);
   text-transform: uppercase;
   color: var(--text-muted);
-  padding: 0.5rem 0.75rem;
-  margin-top: 0.5rem;
+  padding: var(--space-3) var(--space-4);
+  margin-top: var(--space-3);
 }
 
 .nav-link {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
+  gap: var(--space-3);
   text-decoration: none;
   color: var(--text-secondary);
-  padding: 0.7rem 0.875rem;
-  border-radius: var(--radius-md);
+  padding: 0.875rem 1rem;
+  border-radius: var(--radius-full);
   font-size: var(--fs-sm);
   font-weight: var(--fw-medium);
   transition: all var(--transition-base);
-  position: relative;
+  height: 49px;
+  margin-bottom: 16px;
 }
 
 .nav-link svg,
 .nav-link .nav-icon {
-  font-size: 1.05rem;
+  font-size: 1rem;
   flex-shrink: 0;
-  opacity: 0.7;
+  opacity: 0.75;
   transition: opacity var(--transition-fast);
 }
 
@@ -116,39 +146,25 @@
   opacity: 1;
 }
 
-.nav-link.active::before {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 3px;
-  height: 60%;
-  background: var(--color-primary);
-  border-radius: 0 var(--radius-full) var(--radius-full) 0;
-}
-
-/* ── User section ── */
 .sidebar-user {
   border-top: 1px solid var(--border-light);
-  padding-top: 1rem;
+  padding-top: var(--space-5);
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
+  gap: var(--space-3);
 }
 
 .user-info {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
-  padding: 0.5rem 0.625rem;
-  border-radius: var(--radius-md);
-  cursor: default;
+  gap: var(--space-3);
+  padding: var(--space-3);
+  border-radius: var(--radius-lg);
 }
 
 .user-avatar-sm {
-  width: 36px;
-  height: 36px;
+  width: 40px;
+  height: 40px;
   border-radius: var(--radius-full);
   background: var(--gradient-primary);
   color: var(--text-light);
@@ -180,24 +196,33 @@
   color: var(--text-muted);
 }
 
-/* ── Logout button ── */
 .logout-btn {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0.5rem;
+  gap: var(--space-2);
   width: 100%;
-  border: 1px solid var(--border-light);
+  border: none;
   background: transparent;
-  color: var(--danger);
+  color: var(--text-secondary);
   font-size: var(--fs-sm);
   font-weight: var(--fw-medium);
-  padding: 0.625rem 1rem;
+  padding: 0.75rem 1rem;
   border-radius: var(--radius-md);
   transition: all var(--transition-base);
 }
 
 .logout-btn:hover {
   background: var(--danger-soft);
-  border-color: var(--danger);
+  color: var(--danger);
+}
+
+@media (max-width: 768px) {
+  .sidebar {
+    width: 100%;
+    min-width: 100%;
+    min-height: auto;
+    position: relative;
+    padding: var(--space-5);
+  }
 }

@@ -1,7 +1,6 @@
 /* eslint-disable react-hooks/immutability */
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import Sidebar from "../components/Sidebar";
 import Topbar from "../components/Topbar";
 import CategoryModal from "../components/CategoryModal";
 import EmptyState from "../components/EmptyState";
@@ -13,13 +12,11 @@ import { FaFolder, FaEdit, FaTrash, FaPlus } from "react-icons/fa";
 import "../styles/categories.css";
 
 export default function Categories() {
-  // Core Operational States
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // Modal Control Interactivity States
   const [showModal, setShowModal] = useState(false);
-  const [selectedCategory, setSelectedCategory] = useState(null); // Tracks category during edits
+  const [selectedCategory, setSelectedCategory] = useState(null);
   const [confirmDeleteCategoryId, setConfirmDeleteCategoryId] = useState(null);
 
   useEffect(() => {
@@ -38,13 +35,11 @@ export default function Categories() {
     }
   };
 
-  // Triggers the creation modal with no tracking data payload
   const handleCreateClick = () => {
     setSelectedCategory(null);
     setShowModal(true);
   };
 
-  // Maps targeted cards directly into active memory before showing the modal layout
   const handleEditClick = (category) => {
     setSelectedCategory(category);
     setShowModal(true);
@@ -55,116 +50,109 @@ export default function Categories() {
     try {
       await api.delete(`/categories/${confirmDeleteCategoryId}`);
       setConfirmDeleteCategoryId(null);
-      loadCategories(); // Smoothly sync background elements
+      loadCategories();
     } catch (err) {
       console.error("Category destruction service call dropped:", err);
     }
   };
 
   return (
-    <div className="dashboard-layout-root">
-      <Sidebar />
+    <div className="page-content categories-page">
+      <Topbar
+        title="Categories"
+        subtitle="Organize your tasks into dedicated structural groups"
+      />
 
-      <main className="categories-page">
-        <Topbar
-          title="Categories"
-          subtitle="Organize your tasks into dedicated structural groups"
-        />
+      <div className="page-actions-bar">
+        <button className="primary-action-btn" onClick={handleCreateClick}>
+          <FaPlus />
+          <span>New Category</span>
+        </button>
+      </div>
 
-        {/* Global Control Bar */}
-        <div className="page-actions-bar">
-          <button className="primary-action-btn" onClick={handleCreateClick}>
-            <FaPlus />
-            <span>New Category</span>
-          </button>
+      {loading ? (
+        <div className="categories-loading-wrapper">
+          <div className="loading-spinner" />
+          <p>Gathering your asset files...</p>
         </div>
+      ) : categories.length > 0 ? (
+        <div className="category-grid">
+          {categories.map((category) => {
+            const catId = category.id || category._id;
+            return (
+              <div key={catId} className="category-card">
+                <div
+                  className="category-card-top-border"
+                  style={{
+                    backgroundColor: category.color || "var(--color-primary)",
+                  }}
+                />
 
-        {/* Workspace Display Conditions */}
-        {loading ? (
-          <div className="categories-loading-wrapper">
-            <div className="loading-spinner"></div>
-            <p>Gathering your asset files...</p>
-          </div>
-        ) : categories.length > 0 ? (
-          <div className="category-grid">
-            {categories.map((category) => {
-              const catId = category.id || category._id;
-              return (
-                <div key={catId} className="category-card">
+                <div className="card-accent-header">
                   <div
-                    className="category-card-top-border"
+                    className="category-icon-box"
                     style={{
-                      backgroundColor: category.color || "var(--color-primary)",
+                      color: category.color || "var(--color-primary)",
+                      backgroundColor: category.color
+                        ? `${category.color}15`
+                        : "var(--color-primary-soft)",
                     }}
-                  />
-
-                  <div className="card-accent-header">
-                    <div
-                      className="category-icon-box"
-                      style={{
-                        color: category.color || "var(--color-primary)",
-                        backgroundColor: category.color
-                          ? `${category.color}15`
-                          : "var(--color-primary-soft)",
-                      }}
-                    >
-                      <FaFolder />
-                    </div>
-
-                    <div className="category-card-actions">
-                      <button
-                        className="icon-action-btn edit"
-                        onClick={() => handleEditClick(category)}
-                        title="Edit category details"
-                      >
-                        <FaEdit />
-                      </button>
-                      <button
-                        className="icon-action-btn delete"
-                        onClick={() => setConfirmDeleteCategoryId(catId)}
-                        title="Delete category"
-                      >
-                        <FaTrash />
-                      </button>
-                    </div>
+                  >
+                    <FaFolder />
                   </div>
 
-                  <Link
-                    to={`/categories/${catId}`}
-                    className="category-details-link"
-                    style={{ textDecoration: "none", color: "inherit" }}
-                  >
-                    <div className="category-card-body">
-                      <h3>{category.name}</h3>
-                      {/* Displays dynamic task counters if provided by your backend payload */}
-                      <p className="task-count-indicator">
-                        {category.taskCount !== undefined
-                          ? `${category.taskCount} active tasks`
-                          : "View related tasks"}
-                      </p>
-                    </div>
-                  </Link>
+                  <div className="category-card-actions">
+                    <button
+                      type="button"
+                      className="icon-action-btn edit"
+                      onClick={() => handleEditClick(category)}
+                      title="Edit category details"
+                    >
+                      <FaEdit />
+                    </button>
+                    <button
+                      type="button"
+                      className="icon-action-btn delete"
+                      onClick={() => setConfirmDeleteCategoryId(catId)}
+                      title="Delete category"
+                    >
+                      <FaTrash />
+                    </button>
+                  </div>
                 </div>
-              );
-            })}
-          </div>
-        ) : (
-          <EmptyState
-            title="No categories yet"
-            description="Create your first structural group to bring order to your daily task schedules."
-          />
-        )}
-      </main>
 
-      {/* Shared Modal Handling Creation and Edits seamlessly */}
+                <Link
+                  to={`/categories/${catId}`}
+                  className="category-details-link"
+                >
+                  <div className="category-card-body">
+                    <h3>{category.name}</h3>
+                    <p className="task-count-indicator">
+                      {category.taskCount !== undefined
+                        ? `${category.taskCount} active tasks`
+                        : "View related tasks"}
+                    </p>
+                  </div>
+                </Link>
+              </div>
+            );
+          })}
+        </div>
+      ) : (
+        <EmptyState
+          title="No categories yet"
+          description="Create your first structural group to bring order to your daily task schedules."
+        />
+      )}
+
       <CategoryModal
         open={showModal}
-        category={selectedCategory} // Passes data context down cleanly
+        category={selectedCategory}
         onClose={() => {
           setShowModal(false);
           setSelectedCategory(null);
         }}
-        onCategorySaved={loadCategories} // Unified lifecycle naming rule
+        onCategorySaved={loadCategories}
       />
 
       {confirmDeleteCategoryId && (

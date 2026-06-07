@@ -115,6 +115,8 @@ export default function CategoryModal({ open, onClose, category, onCategorySaved
                 <button
                   key={preset}
                   type="button"
+                  aria-label={`Select color ${preset}`}
+                  title={`Color ${preset}`}
                   className={`color-preset-dot ${color === preset ? "active" : ""}`}
                   style={{
                     width: "32px",

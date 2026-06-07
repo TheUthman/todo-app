@@ -140,11 +140,16 @@ export default function AddTaskModal({
               <label className="form-label">
                 <FaTasks /> Status
               </label>
-              <div className="custom-tile-group">
+              <div
+                className="custom-tile-group"
+                role="group"
+                aria-label="Task Status"
+              >
                 {["TODO", "IN_PROGRESS", "COMPLETED"].map((st) => (
                   <button
                     key={st}
                     type="button"
+                    aria-pressed={form.status === st}
                     className={`tile-btn status-${st.toLowerCase()} ${form.status === st ? "active" : ""}`}
                     onClick={() => setForm({ ...form, status: st })}
                   >
@@ -158,11 +163,16 @@ export default function AddTaskModal({
               <label className="form-label">
                 <FaExclamationCircle /> Priority
               </label>
-              <div className="custom-tile-group">
+              <div
+                className="custom-tile-group"
+                role="group"
+                aria-label="Task Priority"
+              >
                 {["LOW", "MEDIUM", "HIGH"].map((pr) => (
                   <button
                     key={pr}
                     type="button"
+                    aria-pressed={form.priority === pr}
                     className={`tile-btn priority-${pr.toLowerCase()} ${form.priority === pr ? "active" : ""}`}
                     onClick={() => setForm({ ...form, priority: pr })}
                   >

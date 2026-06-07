@@ -16,25 +16,32 @@ export function CustomSelect({ label, value, options, onChange }) {
     return () => document.removeEventListener("mousedown", clickOutside);
   }, []);
 
-  const currentLabel = options.find(opt => opt.value === value)?.label || value;
+  const currentLabel =
+    options.find((opt) => opt.value === value)?.label || value;
 
   return (
     <div className="custom-select-container" ref={dropdownRef}>
-      <button 
+      <button
         type="button"
-        className="custom-select-trigger" 
+        className="custom-select-trigger"
         onClick={() => setIsOpen(!isOpen)}
+        aria-haspopup="listbox"
+        aria-expanded={isOpen}
       >
-        <span>{label}: {currentLabel}</span>
-        <FaChevronDown className={`arrow-icon ${isOpen ? 'open' : ''}`} />
+        <span>
+          {label}: {currentLabel}
+        </span>
+        <FaChevronDown className={`arrow-icon ${isOpen ? "open" : ""}`} />
       </button>
 
       {isOpen && (
-        <ul className="custom-select-options">
+        <ul className="custom-select-options" role="listbox">
           {options.map((opt) => (
-            <li 
+            <li
               key={opt.value}
-              className={`custom-select-item ${value === opt.value ? 'active' : ''}`}
+              role="option"
+              aria-selected={value === opt.value}
+              className={`custom-select-item ${value === opt.value ? "active" : ""}`}
               onClick={() => {
                 onChange(opt.value);
                 setIsOpen(false);

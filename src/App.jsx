@@ -9,6 +9,7 @@ import Settings from "./pages/Settings";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import ProtectedRoute from "./components/ProtectesRoute"; // Keeping your exact filename typo intact
+import Layout from "./layouts/Layout";
 
 function App() {
   const { user, loading } = useUser();
@@ -49,11 +50,13 @@ function App() {
         {/* 2. Structured Layout Layer: Protected Workspaces */}
         {/* Every path inside this block automatically inherits protection from ProtectedRoute */}
         <Route element={<ProtectedRoute />}>
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/tasks" element={<Tasks />} />
-          <Route path="/categories" element={<Categories />} />
-          <Route path="/categories/:id" element={<CategoryDetails />} />
-          <Route path="/settings" element={<Settings />} />
+          <Route element={<Layout />}>
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/tasks" element={<Tasks />} />
+            <Route path="/categories" element={<Categories />} />
+            <Route path="/categories/:id" element={<CategoryDetails />} />
+            <Route path="/settings" element={<Settings />} />
+          </Route>
         </Route>
 
         {/* Global Fallback Route (Catches 404 broken entries gracefully) */}

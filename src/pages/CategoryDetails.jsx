@@ -1,9 +1,8 @@
 /* eslint-disable react-hooks/set-state-in-effect */
 import { useEffect, useState, useMemo, useCallback, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import Sidebar from "../components/Sidebar";
 import Topbar from "../components/Topbar";
-import TaskTable from "../components/TaskTable";
+import TaskList from "../components/TaskList";
 import SearchBar from "../components/SearchBar";
 import EmptyState from "../components/EmptyState";
 import EditTaskModal from "../components/EditTaskModal";
@@ -23,13 +22,11 @@ export default function CategoryDetails() {
   const [priorityFilter, setPriorityFilter] = useState("ALL");
   const [searchQuery, setSearchQuery] = useState("");
 
-  // Modal tracking
   const [showAddModal, setShowAddModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
   const [taskToEdit, setTaskToEdit] = useState(null);
   const [confirmDeleteTaskId, setConfirmDeleteTaskId] = useState(null);
 
-  // Dropdown interactivity states
   const [priorityOpen, setPriorityOpen] = useState(false);
   const priorityRef = useRef(null);
 
@@ -110,7 +107,6 @@ export default function CategoryDetails() {
     loadCategoryData();
   }, [loadCategoryData]);
 
-  // Closes dropdown automatically when clicking elsewhere on the screen
   useEffect(() => {
     const handleClickOutside = (e) => {
       if (priorityRef.current && !priorityRef.current.contains(e.target)) {
@@ -135,98 +131,106 @@ export default function CategoryDetails() {
   }, [tasks, priorityFilter, searchQuery]);
 
   return (
-    <div className="dashboard-layout-root">
-      <Sidebar />
-      <main className="tasks-page">
-        <Topbar
-          title={category ? `${category.name}` : "Category"}
-          subtitle="Viewing all tasks within this organizational group"
+    <div className="page-content tasks-page">
+      <Topbar
+        title={category ? category.name : "Category"}
+        subtitle="Viewing all tasks within this organizational group"
+      />
+
+      {category && (
+        <div className="category-detail-header">
+          <span
+            className="category-detail-dot"
+            style={{ backgroundColor: category.color || "var(--color-primary)" }}
+          />
+          <span className="category-detail-name">{category.name}</span>
+        </div>
+      )}
+
+      <div className="page-toolbar">
+        <button
+          type="button"
+          className="primary-action-btn ghost"
+          onClick={() => navigate("/categories")}
+        >
+          <FaArrowLeft /> <span>Back to Categories</span>
+        </button>
+
+        <button
+          type="button"
+          className="primary-action-btn success"
+          onClick={() => setShowAddModal(true)}
+        >
+          <FaPlus /> <span>Add Task</span>
+        </button>
+
+        <SearchBar
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          placeholder="Search within category..."
         />
 
-        <div className="filters-container-bar">
+        <div className="custom-select-wrapper" ref={priorityRef}>
           <button
-            className="primary-action-btn"
-            onClick={() => navigate("/categories")}
+            type="button"
+            className={`custom-select-trigger ${
+              priorityFilter !== "ALL" ? "active" : ""
+            }`}
+            onClick={() => setPriorityOpen(!priorityOpen)}
           >
-            <FaArrowLeft /> <span>Back to Categories</span>
+            <span>{currentPriorityLabel}</span>
+            <FaChevronDown
+              className={`arrow-icon ${priorityOpen ? "rotated" : ""}`}
+            />
           </button>
 
-          <button
-            className="primary-action-btn"
-            style={{ backgroundColor: "#28a745", color: "white" }}
-            onClick={() => setShowAddModal(true)}
-          >
-            <FaPlus /> <span>Add Task</span>
-          </button>
-
-          <SearchBar
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="Search within category..."
-          />
-
-          <div className="custom-select-wrapper" ref={priorityRef}>
-            <button
-              type="button"
-              className={`custom-select-trigger ${
-                priorityFilter !== "ALL" ? "active" : ""
-              }`}
-              onClick={() => setPriorityOpen(!priorityOpen)}
-            >
-              <span>{currentPriorityLabel}</span>
-              <FaChevronDown
-                className={`arrow-icon ${priorityOpen ? "rotated" : ""}`}
-              />
-            </button>
-
-            {priorityOpen && (
-              <ul className="custom-select-dropdown">
-                {priorityOptions.map((opt) => (
-                  <li
-                    key={opt.value}
-                    className={`custom-select-option ${
-                      priorityFilter === opt.value ? "selected" : ""
-                    }`}
-                    onClick={() => {
-                      setPriorityFilter(opt.value);
-                      setPriorityOpen(false);
-                    }}
-                  >
-                    {opt.label}
-                  </li>
-                ))}
-              </ul>
-            )}
-          </div>
+          {priorityOpen && (
+            <ul className="custom-select-dropdown">
+              {priorityOptions.map((opt) => (
+                <li
+                  key={opt.value}
+                  className={`custom-select-option ${
+                    priorityFilter === opt.value ? "selected" : ""
+                  }`}
+                  onClick={() => {
+                    setPriorityFilter(opt.value);
+                    setPriorityOpen(false);
+                  }}
+                >
+                  {opt.label}
+                </li>
+              ))}
+            </ul>
+          )}
         </div>
+      </div>
 
-        {loading ? (
-          <div className="tasks-loading-shimmer-wrapper">
-            <div className="loading-spinner"></div>
-            <p>Gathering tasks...</p>
-          </div>
-        ) : filteredTasks.length > 0 ? (
-          <TaskTable
-            tasks={filteredTasks}
-            onEdit={handleEditClick}
-            onDelete={(id) => setConfirmDeleteTaskId(id)}
-            onToggleComplete={handleToggleComplete}
-          />
-        ) : (
-          <EmptyState
-            title={
-              priorityFilter !== "ALL" || searchQuery
-                ? "No matching tasks"
-                : "No tasks in this category"
-            }
-            description={
-              priorityFilter !== "ALL" || searchQuery
-                ? "Try selecting a different priority or clear the filter."
-                : "Assign tasks to this category to see them listed here."
-            }
-          />
-        )}
-      </main>
+      {loading ? (
+        <div className="tasks-loading-shimmer-wrapper">
+          <div className="loading-spinner" />
+          <p>Gathering tasks...</p>
+        </div>
+      ) : filteredTasks.length > 0 ? (
+        <TaskList
+          tasks={filteredTasks}
+          onEdit={handleEditClick}
+          onDelete={(id) => setConfirmDeleteTaskId(id)}
+          onToggleComplete={handleToggleComplete}
+        />
+      ) : (
+        <EmptyState
+          title={
+            priorityFilter !== "ALL" || searchQuery
+              ? "No matching tasks"
+              : "No tasks in this category"
+          }
+          description={
+            priorityFilter !== "ALL" || searchQuery
+              ? "Try selecting a different priority or clear the filter."
+              : "Assign tasks to this category to see them listed here."
+          }
+        />
+      )}
 
       <AddTaskModal
         open={showAddModal}

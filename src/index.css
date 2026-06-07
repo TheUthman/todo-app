@@ -4,39 +4,39 @@
   /* ===================================
     BRAND COLORS
   =================================== */
-  --color-primary: #004e98;
-  --color-primary-hover: #3a6ea5;
-  --color-primary-light: #5c8fc2;
-  --color-primary-soft: #f0f5fa;
+  --color-primary: #2563eb;
+  --color-primary-hover: #3b82f6;
+  --color-primary-light: #60a5fa;
+  --color-primary-soft: #eff6ff;
 
-  --color-dark: #001f3f;
-  --color-dark-soft: #002b54;
-  --color-dark-muted: #1a3a5c;
+  --color-dark: #0f172a;
+  --color-dark-soft: #1e293b;
+  --color-dark-muted: #334155;
 
   /* ===================================
     BACKGROUNDS
   =================================== */
-  --bg-main: #ebebeb;
+  --bg-main: #f4f6f9;
   --bg-surface: #ffffff;
   --bg-card: #ffffff;
   --bg-sidebar: #ffffff;
-  --bg-hover: #f5f5f5;
-  --bg-selected: #e6eff7;
+  --bg-hover: #f1f5f9;
+  --bg-selected: #eff6ff;
 
   /* ===================================
     TEXT
   =================================== */
-  --text-primary: #001f3f;
-  --text-secondary: #58697d;
-  --text-muted: #8c9ba5;
+  --text-primary: #0f172a;
+  --text-secondary: #64748b;
+  --text-muted: #94a3b8;
   --text-light: #ffffff;
 
   /* ===================================
     BORDERS
   =================================== */
-  --border-light: #ebebeb;
-  --border-default: #c0c0c0;
-  --border-strong: #8c9ba5;
+  --border-light: #e8edf2;
+  --border-default: #cbd5e1;
+  --border-strong: #94a3b8;
 
   /* ===================================
     SEMANTIC COLORS
@@ -44,14 +44,14 @@
   --success: #22c55e;
   --success-soft: #dcfce7;
 
-  --warning: #ff6700;
-  --warning-soft: #ffebe0;
+  --warning: #f59e0b;
+  --warning-soft: #fef3c7;
 
   --danger: #ef4444;
   --danger-soft: #fee2e2;
 
-  --info: #3a6ea5;
-  --info-soft: #eef5fc;
+  --info: #3b82f6;
+  --info-soft: #eff6ff;
 
   --purple: #8b5cf6;
   --purple-soft: #ede9fe;
@@ -60,23 +60,23 @@
     PRIORITY COLORS
   =================================== */
   --priority-high: #ef4444;
-  --priority-medium: #ff6700;
+  --priority-medium: #f59e0b;
   --priority-low: #22c55e;
 
   /* ===================================
     TASK STATUS
   =================================== */
-  --status-todo: #8c9ba5;
-  --status-progress: #3a6ea5;
+  --status-todo: #94a3b8;
+  --status-progress: #3b82f6;
   --status-completed: #22c55e;
   --status-overdue: #ef4444;
 
   /* ===================================
     CATEGORY COLORS
   =================================== */
-  --category-design: #3a6ea5;
-  --category-development: #004e98;
-  --category-documentation: #ff6700;
+  --category-design: #3b82f6;
+  --category-development: #2563eb;
+  --category-documentation: #f59e0b;
   --category-marketing: #ec4899;
   --category-personal: #22c55e;
   --category-devops: #8b5cf6;
@@ -84,16 +84,30 @@
   /* ===================================
     SHADOWS
   =================================== */
-  --shadow-sm: 0 2px 4px rgba(0, 78, 152, 0.05);
-  --shadow-md: 0 4px 12px rgba(0, 78, 152, 0.08);
-  --shadow-lg: 0 12px 30px rgba(0, 78, 152, 0.12);
+  --shadow-sm: 0 1px 3px rgba(15, 23, 42, 0.04), 0 1px 2px rgba(15, 23, 42, 0.02);
+  --shadow-md: 0 4px 12px rgba(15, 23, 42, 0.06);
+  --shadow-lg: 0 12px 32px rgba(15, 23, 42, 0.08);
 
   /* ===================================
     GRADIENTS
   =================================== */
-  --gradient-primary: linear-gradient(135deg, #004e98 0%, #3a6ea5 100%);
-  --gradient-dark: linear-gradient(135deg, #001f3f 0%, #1a3a5c 100%);
-  --gradient-card: linear-gradient(180deg, #ffffff 0%, #ebebeb 100%);
+  --gradient-primary: linear-gradient(135deg, #2563eb 0%, #3b82f6 100%);
+  --gradient-dark: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+  --gradient-card: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+
+  /* ===================================
+    SPACING SCALE
+  =================================== */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-7: 1.75rem;
+  --space-8: 2rem;
+  --space-9: 2.5rem;
+  --space-10: 3rem;
 
   /* ===================================
     TYPOGRAPHY
@@ -139,53 +153,45 @@
   --transition-fast: 0.15s ease;
   --transition-base: 0.25s ease;
   --transition-slow: 0.4s ease;
-} 
+}
 
 /* ==========================================================================
-   DARK THEME — Full Design Token Overrides
-   Applied via body.dark class (set by ThemeContext)
+   DARK THEME
    ========================================================================== */
 .dark {
-  /* ── Backgrounds (layered elevation) ── */
-  --bg-main:    #0d1117;   /* deepest level — page background */
-  --bg-surface: #161b22;   /* mid level — topbar, sidebar, modals */
-  --bg-card:    #1c2330;   /* raised cards & panels */
-  --bg-sidebar: #161b22;
-  --bg-hover:   #21283a;   /* interactive hover state */
-  --bg-selected:#1e3a5f;   /* selected/active highlight — blue tinted */
+  --bg-main: #0f1419;
+  --bg-surface: #1a1f2e;
+  --bg-card: #222836;
+  --bg-sidebar: #1a1f2e;
+  --bg-hover: #2a3142;
+  --bg-selected: #1e3a5f;
 
-  /* ── Text ── */
-  --text-primary:   #e6edf3;  /* near-white with slight warmth */
-  --text-secondary: #8b949e;  /* muted labels */
-  --text-muted:     #6e7681;  /* ghost / placeholder text */
+  --text-primary: #f1f5f9;
+  --text-secondary: #94a3b8;
+  --text-muted: #64748b;
 
-  /* ── Borders ── */
-  --border-light:   #21283a;  /* subtle dividers */
-  --border-default: #30363d;  /* standard borders */
-  --border-strong:  #484f58;  /* active / focus emphasis */
+  --border-light: #2a3142;
+  --border-default: #374151;
+  --border-strong: #4b5563;
 
-  /* ── Shadows (darker ambient on dark bg) ── */
-  --shadow-sm: 0 2px 6px rgba(0, 0, 0, 0.35);
-  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.45);
-  --shadow-lg: 0 12px 40px rgba(0, 0, 0, 0.55);
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.2);
+  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.3);
+  --shadow-lg: 0 12px 40px rgba(0, 0, 0, 0.4);
 
-  /* ── Brand/Primary adjustments ── */
-  --color-primary:       #4d9de0;   /* brighter blue for dark bg readability */
-  --color-primary-hover: #6db3f2;
-  --color-primary-light: #89c4f4;
-  --color-primary-soft:  #1b3a5c;   /* dark blue tint for icon frames */
+  --color-primary: #60a5fa;
+  --color-primary-hover: #93c5fd;
+  --color-primary-light: #bfdbfe;
+  --color-primary-soft: #1e3a5f;
 
-  /* ── Semantic soft backgrounds (dark-compatible tints) ── */
   --success-soft: #0d2a1a;
-  --warning-soft: #2a1800;
-  --danger-soft:  #2a0d0d;
-  --info-soft:    #0d1f36;
-  --purple-soft:  #1e1433;
+  --warning-soft: #2a2000;
+  --danger-soft: #2a0d0d;
+  --info-soft: #0d1f36;
+  --purple-soft: #1e1433;
 
-  /* ── Gradient updates ── */
-  --gradient-primary: linear-gradient(135deg, #1a5fa8 0%, #4d9de0 100%);
-  --gradient-dark:    linear-gradient(135deg, #0d1117 0%, #161b22 100%);
-  --gradient-card:    linear-gradient(180deg, #1c2330 0%, #161b22 100%);
+  --gradient-primary: linear-gradient(135deg, #1d4ed8 0%, #3b82f6 100%);
+  --gradient-dark: linear-gradient(135deg, #0f1419 0%, #1a1f2e 100%);
+  --gradient-card: linear-gradient(180deg, #222836 0%, #1a1f2e 100%);
 }
 
 /* ==========================================
@@ -259,6 +265,109 @@ h6 {
 }
 
 /* ==========================================
+   UNIFIED BADGE SYSTEM
+   ========================================== */
+
+.badge-priority,
+.badge-status,
+.priority,
+.status {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.3rem 0.75rem;
+  border-radius: var(--radius-full);
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-semibold);
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+
+.badge-priority.high,
+.priority.HIGH,
+.priority.high { background: var(--danger-soft); color: var(--danger); }
+.badge-priority.medium,
+.priority.MEDIUM,
+.priority.medium { background: var(--warning-soft); color: var(--warning); }
+.badge-priority.low,
+.priority.LOW,
+.priority.low { background: var(--success-soft); color: var(--success); }
+
+.badge-status.completed,
+.status.COMPLETED,
+.status.completed { background: var(--success-soft); color: var(--success); }
+.badge-status.in-progress,
+.status.IN_PROGRESS,
+.status.in-progress { background: var(--color-primary-soft); color: var(--color-primary); }
+.badge-status.todo,
+.status.TODO,
+.status.todo { background: var(--bg-hover); color: var(--text-secondary); border: 1px solid var(--border-light); }
+
+/* ==========================================
+   PRIMARY BUTTONS
+   ========================================== */
+
+.create-btn,
+.btn-add-task,
+.primary-action-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  background: var(--gradient-primary);
+  color: var(--text-light);
+  border: none;
+  padding: 0.7rem 1.5rem;
+  height: 44px;
+  border-radius: var(--radius-md);
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-semibold);
+  box-shadow: var(--shadow-sm);
+  transition: all var(--transition-base);
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.create-btn:hover,
+.btn-add-task:hover,
+.primary-action-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+  filter: brightness(1.03);
+}
+
+.create-btn:active,
+.btn-add-task:active,
+.primary-action-btn:active {
+  transform: translateY(0);
+}
+
+.create-btn:disabled,
+.btn-add-task:disabled,
+.primary-action-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.primary-action-btn.ghost {
+  background: var(--bg-surface);
+  color: var(--text-secondary);
+  border: 1px solid var(--border-light);
+  box-shadow: none;
+}
+
+.primary-action-btn.ghost:hover {
+  background: var(--bg-hover);
+  color: var(--text-primary);
+  border-color: var(--border-default);
+  filter: none;
+}
+
+.primary-action-btn.success {
+  background: linear-gradient(135deg, #16a34a 0%, #22c55e 100%);
+}
+
+/* ==========================================
    SCROLLBAR
    ========================================== */
 
@@ -281,41 +390,34 @@ h6 {
 }
 
 /* ==========================================================================
-   FILTER BAR LAYOUT
+   FILTER BAR & CUSTOM SELECT
    ========================================================================== */
 .filter-bar {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: var(--space-3);
   font-family: var(--font-primary);
 }
 
 .custom-select-wrapper {
   position: relative;
-  min-width: 160px;
+  min-width: 180px;
 }
 
-/* ==========================================================================
-   SELECT TRIGGER TRIGGER BUTTON
-   ========================================================================== */
 .custom-select-trigger {
   width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  
-  /* Color & Architecture Matches */
-  background-color: var(--bg-card);
+  background-color: var(--bg-surface);
   color: var(--text-primary);
-  border: 1px solid var(--border-default);
-  border-radius: var(--radius-sm);
-  padding: 10px 14px;
-  
-  /* Typography Tokens */
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+  padding: 0.65rem 1rem;
+  height: 44px;
   font-size: var(--fs-sm);
   font-weight: var(--fw-medium);
   letter-spacing: var(--ls-tight);
-  
   cursor: pointer;
   transition: all var(--transition-fast);
 }
@@ -324,14 +426,12 @@ h6 {
   border-color: var(--color-primary);
 }
 
-/* Active Highlight Filter State */
 .custom-select-trigger.active {
   border-color: var(--color-primary);
   background-color: var(--bg-selected);
   font-weight: var(--fw-semibold);
 }
 
-/* Chevron Layout Style */
 .arrow-icon {
   font-size: var(--fs-xs);
   color: var(--text-secondary);
@@ -343,33 +443,23 @@ h6 {
   color: var(--color-primary);
 }
 
-/* ==========================================================================
-   TRUE DOM OVERLAY MENU DROPDOWN
-   ========================================================================== */
 .custom-select-dropdown {
   position: absolute;
-  top: calc(100% + 4px);
+  top: calc(100% + 6px);
   left: 0;
   width: 100%;
-  
-  /* Color & Architecture Matches */
   background-color: var(--bg-surface);
   border: 1px solid var(--border-light);
-  border-radius: var(--radius-sm);
-  padding: 6px 0;
+  border-radius: var(--radius-md);
+  padding: var(--space-2) 0;
   margin: 0;
   list-style: none;
-  
-  /* Depth Layering Matches */
   box-shadow: var(--shadow-md);
   z-index: 100;
 }
 
-/* ==========================================================================
-   MENU LIST SELECTION OPTIONS
-   ========================================================================== */
 .custom-select-option {
-  padding: 10px 14px;
+  padding: 0.65rem 1rem;
   font-size: var(--fs-sm);
   font-weight: var(--fw-regular);
   color: var(--text-primary);
@@ -382,16 +472,12 @@ h6 {
   color: var(--color-primary-hover);
 }
 
-/* Matching Selected Node Highlighter */
 .custom-select-option.selected {
   background-color: var(--bg-selected);
   color: var(--color-primary);
   font-weight: var(--fw-semibold);
 }
 
-/* ==========================================================================
-   CLEAR ACTION SELECTION RESET BUTTON
-   ========================================================================== */
 .clear-btn {
   background: transparent;
   border: none;
@@ -400,7 +486,7 @@ h6 {
   font-weight: var(--fw-medium);
   letter-spacing: var(--ls-tight);
   cursor: pointer;
-  padding: 8px 14px;
+  padding: var(--space-2) var(--space-4);
   border-radius: var(--radius-sm);
   transition: all var(--transition-fast);
 }

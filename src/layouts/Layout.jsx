@@ -1,14 +1,15 @@
-// components/Layout.jsx
+import { Outlet } from "react-router-dom";
+import Sidebar from "../components/Sidebar";
+import "../styles/layout.css";
 
-import Sidebar from "./Sidebar";
-
-export default function Layout({ children }) {
+export default function Layout() {
   return (
-    <div className="app-layout">
+    <div className="app-shell">
       <Sidebar />
-
-      <main className="main-content">
-        {children}
+      <main className="app-main">
+        <div className="app-main-inner">
+          <Outlet />
+        </div>
       </main>
     </div>
   );
