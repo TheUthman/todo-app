@@ -23,7 +23,7 @@
   margin: 0 0 1.25rem 0;
   padding-bottom: 0.875rem;
   border-bottom: 1px solid var(--border-light);
-  letter-spacing: var(--ls-tight);
+  letter-spacing: 0;
 }
 
 /* ── Settings Wrapper Structure ── */
@@ -130,7 +130,7 @@
 }
 
 .switch-toggle input:checked + .switch-slider {
-  background: var(--gradient-primary);
+  background: var(--color-primary);
 }
 
 .switch-toggle input:checked + .switch-slider::before {
@@ -169,15 +169,16 @@
 }
 
 .settings-action-btn {
-  background: var(--gradient-primary);
+  background: var(--color-primary);
   color: var(--text-light);
-  box-shadow: 0 4px 14px rgba(0, 78, 152, 0.25);
+  box-shadow: none;
 }
 
 .settings-action-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 18px rgba(0, 78, 152, 0.35);
-  filter: brightness(1.03);
+  background: var(--color-primary-hover);
+  transform: none;
+  box-shadow: none;
+  filter: none;
 }
 
 .settings-logout-btn {
@@ -191,7 +192,7 @@
   color: var(--text-light);
   border-color: var(--danger);
   box-shadow: 0 4px 14px rgba(239, 68, 68, 0.25);
-  transform: translateY(-2px);
+  transform: none;
 }
 
 /* ── Full-Page Loading Preferred Layout Accent ── */
@@ -272,7 +273,7 @@
 .settings-inline-input:focus {
   outline: none;
   border-color: var(--color-primary);
-  box-shadow: 0 0 0 3px rgba(0, 78, 152, 0.15);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-primary) 16%, transparent);
 }
 
 /* ── Inline Feedback Banners ── */
@@ -333,15 +334,16 @@
 }
 
 .settings-save-btn {
-  background: var(--gradient-primary);
+  background: var(--color-primary);
   border: none;
   color: var(--text-light);
-  box-shadow: 0 4px 12px rgba(0, 78, 152, 0.2);
+  box-shadow: none;
 }
 
 .settings-save-btn:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 6px 16px rgba(0, 78, 152, 0.3);
+  background: var(--color-primary-hover);
+  transform: none;
+  box-shadow: none;
 }
 
 .settings-cancel-btn:disabled,

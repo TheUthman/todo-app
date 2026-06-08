@@ -1,4 +1,4 @@
-import { FaEdit, FaTrash } from "react-icons/fa";
+import { FaEdit, FaTrash, FaCalendarAlt, FaTag } from "react-icons/fa";
 import "../styles/tasklist.css";
 
 const formatLabel = (str) => {
@@ -9,7 +9,12 @@ const formatLabel = (str) => {
     .replace(/\b\w/g, (c) => c.toUpperCase());
 };
 
-export default function TaskList({ tasks, onDelete, onEdit, onToggleComplete }) {
+export default function TaskList({
+  tasks,
+  onDelete,
+  onEdit,
+  onToggleComplete,
+}) {
   return (
     <div className="task-list">
       {tasks.map((task) => {
@@ -18,7 +23,8 @@ export default function TaskList({ tasks, onDelete, onEdit, onToggleComplete }) 
           ? task.dueDate.split("T")[0]
           : "No date";
         const priorityClass = task.priority?.toLowerCase() || "low";
-        const statusClass = task.status?.toLowerCase().replace("_", "-") || "todo";
+        const statusClass =
+          task.status?.toLowerCase().replace("_", "-") || "todo";
 
         return (
           <article
@@ -35,18 +41,32 @@ export default function TaskList({ tasks, onDelete, onEdit, onToggleComplete }) 
             </label>
 
             <div className="task-list-body">
-              <h4 className="task-list-title">{task.title}</h4>
-              {task.description && (
-                <p className="task-list-desc">{task.description}</p>
-              )}
+              <div className="task-info-group">
+                <h4 className="task-list-title">{task.title}</h4>
+                {task.description && (
+                  <p className="task-list-desc">{task.description}</p>
+                )}
+              </div>
+
               <div className="task-list-meta">
-                <span className={`badge-priority ${priorityClass}`}>
-                  {formatLabel(task.priority)}
-                </span>
-                <span className={`badge-status ${statusClass}`}>
-                  {formatLabel(task.status)}
-                </span>
-                <span className="task-list-date">{formattedDate}</span>
+                <div className="meta-badges">
+                  <span className={`badge-priority ${priorityClass}`}>
+                    {formatLabel(task.priority)}
+                  </span>
+                  <span className={`badge-status ${statusClass}`}>
+                    {formatLabel(task.status)}
+                  </span>
+                </div>
+                <div className="meta-details">
+                  <span className="task-list-date">
+                    <FaCalendarAlt /> {formattedDate}
+                  </span>
+                  {task.categoryName && (
+                    <span className="task-list-cat">
+                      <FaTag style={{width:"" , height:""}} /> {task.categoryName}
+                    </span>
+                  )}
+                </div>
               </div>
             </div>
 

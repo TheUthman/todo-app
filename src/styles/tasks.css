@@ -3,7 +3,7 @@
    ========================================== */
 
 .tasks-page {
-  gap: var(--space-8);
+  gap: var(--space-7);
 }
 
 .page-toolbar {
@@ -49,7 +49,7 @@
 
 .search-bar input:focus {
   border-color: var(--color-primary);
-  box-shadow: 0 0 0 3px var(--color-primary-soft);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-primary) 16%, transparent);
   outline: none;
 }
 
@@ -66,7 +66,7 @@
   padding: var(--space-10);
   background: var(--bg-surface);
   border: 1px solid var(--border-light);
-  border-radius: var(--radius-xl);
+  border-radius: var(--radius-lg);
   color: var(--text-secondary);
   font-size: var(--fs-sm);
   font-weight: var(--fw-medium);

@@ -5,19 +5,19 @@ import api from "../api";
 import "../styles/modal.css";
 
 const PRESET_COLORS = [
-  "#004e98", // Deep Blue (Brand Primary)
-  "#3a6ea5", // Steel Blue (Brand Secondary)
-  "#ff6700", // Safety Orange (Accent)
-  "#22c55e", // Green
-  "#8b5cf6", // Purple
-  "#ef4444", // Red
-  "#f59e0b", // Amber/Yellow
-  "#ec4899"  // Pink
+  "#0f766e",
+  "#2563eb",
+  "#16a34a",
+  "#b7791f",
+  "#7c3aed",
+  "#dc2626",
+  "#475569",
+  "#be185d"
 ];
 
 export default function CategoryModal({ open, onClose, category, onCategorySaved, onCategoryCreated }) {
   const [name, setName] = useState("");
-  const [color, setColor] = useState("#004e98");
+  const [color, setColor] = useState("#0f766e");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -27,10 +27,10 @@ export default function CategoryModal({ open, onClose, category, onCategorySaved
     if (open) {
       if (category) {
         setName(category.name || "");
-        setColor(category.color || "#004e98");
+        setColor(category.color || "#0f766e");
       } else {
         setName("");
-        setColor("#004e98");
+        setColor("#0f766e");
       }
       setError("");
     }
@@ -124,10 +124,9 @@ export default function CategoryModal({ open, onClose, category, onCategorySaved
                     borderRadius: "50%",
                     backgroundColor: preset,
                     border: color === preset ? "3px solid var(--text-primary)" : "1px solid var(--border-default)",
-                    boxShadow: color === preset ? "0 0 8px rgba(0, 0, 0, 0.2)" : "none",
+                    boxShadow: color === preset ? "0 0 0 3px var(--bg-main)" : "none",
                     cursor: "pointer",
-                    transition: "transform 0.15s ease, border-width 0.15s ease",
-                    transform: color === preset ? "scale(1.1)" : "scale(1)"
+                    transition: "border-width 0.15s ease, box-shadow 0.15s ease"
                   }}
                   onClick={() => setColor(preset)}
                   disabled={loading}

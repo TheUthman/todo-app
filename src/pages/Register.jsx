@@ -11,9 +11,7 @@ import {
   FaExclamationCircle,
   FaCheckCircle,
   FaTimesCircle,
-  FaTasks,
 } from "react-icons/fa";
-// import registerIllustration from "../assets/register_illustration.png";
 import "../styles/auth.css";
 
 export default function Register() {
@@ -111,13 +109,194 @@ export default function Register() {
     <div className="auth-page">
       <div className="auth-card">
         {/* Left Side: Illustration Panel */}
-        <div className="auth-illustration">
-          <div style={{ display: "flex", alignItems: "center", justifyContent: "center", width: "100%", maxWidth: "350px" }}>
-            <FaTasks style={{ fontSize: "120px", color: "rgba(255,255,255,0.3)" }} />
-          </div>
-          <div className="auth-brand">
-            <h2>TodoFlow</h2>
-            <p>Your productivity, elevated.</p>
+        <div
+          className="auth-illustration"
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+            padding: "40px",
+            position: "relative",
+            overflow: "hidden",
+          }}
+        >
+          <div className="illustration-overlay"></div>
+          <img
+            src="/todoflow-mark.svg"
+            alt=""
+            aria-hidden="true"
+            style={{
+              width: "96px",
+              height: "96px",
+              marginBottom: "1.5rem",
+              zIndex: 1,
+            }}
+          />
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 640 520"
+            fill="none"
+          >
+            <rect
+              x="138"
+              y="66"
+              width="364"
+              height="370"
+              rx="28"
+              fill="#111827"
+            />
+            <rect
+              x="162"
+              y="96"
+              width="316"
+              height="310"
+              rx="20"
+              fill="#F7F4EE"
+            />
+            <rect
+              x="190"
+              y="128"
+              width="132"
+              height="18"
+              rx="9"
+              fill="#14B8A6"
+            />
+            <rect
+              x="190"
+              y="160"
+              width="244"
+              height="100"
+              rx="18"
+              fill="#FFFFFF"
+              stroke="#E8E2D8"
+            />
+            <path
+              d="M210 230L250 190L290 210L330 170L370 190L410 150"
+              stroke="#14B8A6"
+              stroke-width="6"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              opacity="0.3"
+            />
+            <path
+              d="M210 240C240 200 280 230 310 190C340 150 380 180 410 140"
+              stroke="#14B8A6"
+              stroke-width="6"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+            <rect
+              x="190"
+              y="280"
+              width="156"
+              height="14"
+              rx="7"
+              fill="#E8E2D8"
+            />
+            <rect
+              x="190"
+              y="310"
+              width="210"
+              height="14"
+              rx="7"
+              fill="#E8E2D8"
+            />
+            <rect
+              x="190"
+              y="338"
+              width="112"
+              height="14"
+              rx="7"
+              fill="#D7D0C4"
+            />
+            <rect
+              x="94"
+              y="280"
+              width="56"
+              height="14"
+              rx="7"
+              fill="#14B8A6"
+              opacity="0.9"
+            />
+            <rect
+              x="92"
+              y="304"
+              width="82"
+              height="14"
+              rx="7"
+              fill="#E8E2D8"
+              opacity="0.9"
+            />
+            <rect
+              x="488"
+              y="280"
+              width="58"
+              height="14"
+              rx="7"
+              fill="#14B8A6"
+              opacity="0.9"
+            />
+            <rect
+              x="462"
+              y="304"
+              width="84"
+              height="14"
+              rx="7"
+              fill="#E8E2D8"
+              opacity="0.9"
+            />
+            <path
+              d="M120 130C145 150 168 148 194 136"
+              stroke="#14B8A6"
+              stroke-width="10"
+              stroke-linecap="round"
+            />
+            <path
+              d="M438 138C456 148 477 152 502 142"
+              stroke="#14B8A6"
+              stroke-width="10"
+              stroke-linecap="round"
+            />
+            <circle
+              cx="108"
+              cy="128"
+              r="12"
+              fill="#CCFBF1"
+              stroke="#14B8A6"
+              stroke-width="4"
+            />
+            <circle
+              cx="516"
+              cy="140"
+              r="12"
+              fill="#CCFBF1"
+              stroke="#14B8A6"
+              stroke-width="4"
+            />
+            <path
+              d="M286 52C286 40.9543 294.954 32 306 32H334C345.046 32 354 40.9543 354 52V84H286V52Z"
+              fill="#111827"
+            />
+            <circle cx="320" cy="58" r="8" fill="#14B8A6" />
+          </svg>
+          <div
+            className="auth-brand"
+            style={{ textAlign: "center", zIndex: 1, marginTop: "2rem" }}
+          >
+            <h2
+              style={{
+                fontSize: "2.5rem",
+                fontWeight: "800",
+                color: "white",
+                marginBottom: "0.5rem",
+              }}
+            >
+              TodoFlow
+            </h2>
+            <p style={{ color: "rgba(255,255,255,0.8)", fontSize: "1.1rem" }}>
+              Your productivity, elevated.
+            </p>
           </div>
         </div>
 

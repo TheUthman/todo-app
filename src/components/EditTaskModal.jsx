@@ -1,6 +1,13 @@
 /* eslint-disable react-hooks/set-state-in-effect */
 import { useEffect, useState, useRef } from "react";
-import { FaTimes, FaCalendarAlt, FaTags, FaExclamationCircle, FaTasks, FaChevronDown } from "react-icons/fa";
+import {
+  FaTimes,
+  FaCalendarAlt,
+  FaTags,
+  FaExclamationCircle,
+  FaTasks,
+  FaChevronDown,
+} from "react-icons/fa";
 import api from "../api";
 import "../styles/modal.css";
 
@@ -70,26 +77,31 @@ export default function EditTaskModal({ open, onClose, onTaskUpdated, task }) {
   if (!open || !task) return null;
 
   // Resolve the string text name of the currently selected category option
-  const currentCategoryLabel = categories.find((c) => c.id === form.categoryId)?.name || "Select Category";
+  const currentCategoryLabel =
+    categories.find((c) => c.id === form.categoryId)?.name || "Select Category";
 
   return (
     <div className="modal-overlay" onClick={onClose}>
       <div className="modal-container" onClick={(e) => e.stopPropagation()}>
-        
         {/* Header Block */}
         <div className="modal-header">
           <div>
             <h2>Edit Task</h2>
-            <p className="modal-subtitle">Modify task properties and workflow states</p>
+            <p className="modal-subtitle">
+              Modify task properties and workflow states
+            </p>
           </div>
-          <button onClick={onClose} className="close-btn" aria-label="Close modal">
+          <button
+            onClick={onClose}
+            className="close-btn"
+            aria-label="Close modal"
+          >
             <FaTimes />
           </button>
         </div>
 
         {/* Input Interactive Space */}
         <form onSubmit={submitTask} className="modal-form">
-          
           <div className="form-group">
             <label className="form-label">Task Title</label>
             <input
@@ -109,15 +121,18 @@ export default function EditTaskModal({ open, onClose, onTaskUpdated, task }) {
               rows="3"
               className="form-input text-area-input"
               value={form.description}
-              onChange={(e) => setForm({ ...form, description: e.target.value })}
+              onChange={(e) =>
+                setForm({ ...form, description: e.target.value })
+              }
             />
           </div>
 
           {/* Inline Selection Row: Status and Priority segmented badges */}
           <div className="form-row split-grid">
-            
             <div className="form-group">
-              <label className="form-label"><FaTasks /> Status</label>
+              <label className="form-label">
+                <FaTasks /> Status
+              </label>
               <div className="custom-tile-group">
                 {["TODO", "IN_PROGRESS", "COMPLETED"].map((st) => (
                   <button
@@ -133,7 +148,9 @@ export default function EditTaskModal({ open, onClose, onTaskUpdated, task }) {
             </div>
 
             <div className="form-group">
-              <label className="form-label"><FaExclamationCircle /> Priority</label>
+              <label className="form-label">
+                <FaExclamationCircle /> Priority
+              </label>
               <div className="custom-tile-group">
                 {["LOW", "MEDIUM", "HIGH"].map((pr) => (
                   <button
@@ -147,14 +164,14 @@ export default function EditTaskModal({ open, onClose, onTaskUpdated, task }) {
                 ))}
               </div>
             </div>
-
           </div>
 
           {/* Inline Selection Row: Category and Due Date inputs */}
           <div className="form-row split-grid">
-            
             <div className="form-group">
-              <label className="form-label"><FaCalendarAlt /> Due Date</label>
+              <label className="form-label">
+                <FaCalendarAlt /> Due Date
+              </label>
               <input
                 type="date"
                 className="form-input icon-input-field"
@@ -164,8 +181,10 @@ export default function EditTaskModal({ open, onClose, onTaskUpdated, task }) {
             </div>
 
             <div className="form-group">
-              <label className="form-label"><FaTags /> Category</label>
-              
+              <label className="form-label">
+                <FaTags /> Category
+              </label>
+
               {/* UPGRADED: True Custom Dropdown Interface Element */}
               <div className="modal-custom-select-wrapper" ref={categoryRef}>
                 <button
@@ -174,7 +193,9 @@ export default function EditTaskModal({ open, onClose, onTaskUpdated, task }) {
                   onClick={() => setCategoryDropdownOpen(!categoryDropdownOpen)}
                 >
                   <span>{currentCategoryLabel}</span>
-                  <FaChevronDown className={`modal-arrow-icon ${categoryDropdownOpen ? "rotated" : ""}`} />
+                  <FaChevronDown
+                    className={`modal-arrow-icon ${categoryDropdownOpen ? "rotated" : ""}`}
+                  />
                 </button>
 
                 {categoryDropdownOpen && (
@@ -204,21 +225,28 @@ export default function EditTaskModal({ open, onClose, onTaskUpdated, task }) {
                 )}
               </div>
               {/* Hidden structural input to maintain html form required validation metrics safely */}
-              <input type="hidden" name="categoryId" required value={form.categoryId} />
+              <input
+                type="hidden"
+                name="categoryId"
+                required
+                value={form.categoryId}
+              />
             </div>
-
           </div>
 
           {/* Actions Footer */}
           <div className="modal-actions-footer">
-            <button type="button" className="cancel-action-btn" onClick={onClose}>
+            <button
+              type="button"
+              className="cancel-action-btn"
+              onClick={onClose}
+            >
               Cancel
             </button>
             <button type="submit" className="save-action-btn">
               Save Changes
             </button>
           </div>
-
         </form>
       </div>
     </div>

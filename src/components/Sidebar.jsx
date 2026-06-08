@@ -4,6 +4,7 @@ import {
   FaThLarge,
   FaTasks,
   FaFolder,
+  FaCalendarAlt,
   FaCog,
   FaSignOutAlt,
   FaChevronLeft,
@@ -26,45 +27,11 @@ export default function Sidebar() {
   };
 
   return (
-    <aside
-      className="sidebar"
-      style={{
-        width: isCollapsed ? "80px" : "280px",
-        minWidth: isCollapsed ? "80px" : "280px",
-        alignItems: isCollapsed ? "center" : "start",
-        padding: "32px 20px",
-        borderRight: "1px solid var(--border-soft)",
-        transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
-        position: "relative",
-      }}
-    >
-      <style>{`
-        @keyframes flowWave {
-          0% { background-position: 100% 50%; }
-          100% { background-position: 0% 50%; }
-        }
-      `}</style>
-
-      {/* Collapse Toggle Button */}
+    <aside className={`sidebar ${isCollapsed ? "is-collapsed" : ""}`}>
       <button
         onClick={() => setIsCollapsed(!isCollapsed)}
         aria-label={isCollapsed ? "Expand sidebar" : "Collapse sidebar"}
-        style={{
-          position: "absolute",
-          right: "-12px",
-          top: "40px",
-          width: "24px",
-          height: "24px",
-          borderRadius: "50%",
-          background: "#4f46e5",
-          color: "white",
-          border: "none",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          boxShadow: "0 4px 10px rgba(0,0,0,0.15)",
-          zIndex: 10,
-        }}
+        className="sidebar-collapse-btn"
       >
         {isCollapsed ? (
           <FaChevronRight size={10} />
@@ -73,67 +40,33 @@ export default function Sidebar() {
         )}
       </button>
 
-      <div
-        style={{
-          height: "100%",
-          display: "flex",
-          flexDirection: "column",
-          width: "100%",
-          alignItems: isCollapsed ? "center" : "start",
-        }}
-      >
-        {/* Logo */}
-        <div
-          className="logo"
-          style={{
-            marginBottom: "48px",
-            paddingLeft: "12px",
-            justifyContent: "flex-start",
-          }}
-        >
+      <div className="sidebar-main">
+        <div className="logo">
           <div className="logo-icon">
-            T<span>F</span>
+            <img src="/todoflow-mark.svg" alt="" aria-hidden="true" />
           </div>
           {!isCollapsed && (
             <span
               className="logo-text"
-              style={{ fontSize: "1.5rem", fontWeight: 800 }}
             >
               Todo<span>Flow</span>
             </span>
           )}
         </div>
 
-        {/* Nav */}
-        <nav className="sidebar-nav" style={{ flex: 1 }}>
+        <nav className="sidebar-nav">
           {!isCollapsed && (
-            <span
-              className="nav-section-label"
-              style={{
-                fontSize: "0.75rem",
-                textTransform: "uppercase",
-                letterSpacing: "0.1em",
-                fontWeight: 700,
-                opacity: 0.5,
-                marginBottom: "16px",
-                display: "block",
-                paddingLeft: "12px",
-              }}
-            >
+            <span className="nav-section-label">
               Menu
             </span>
           )}
-
+          
           <NavLink
             to="/dashboard"
             title={isCollapsed ? "Dashboard" : ""}
             className={({ isActive }) =>
               isActive ? "nav-link active" : "nav-link"
             }
-            style={{
-              justifyContent: "flex-start",
-              padding: "14px 20px",
-            }}
           >
             <FaThLarge className="nav-icon" />
             {!isCollapsed && "Dashboard"}
@@ -145,10 +78,6 @@ export default function Sidebar() {
             className={({ isActive }) =>
               isActive ? "nav-link active" : "nav-link"
             }
-            style={{
-              justifyContent: "flex-start",
-              padding: "14px 20px",
-            }}
           >
             <FaTasks className="nav-icon" />
             {!isCollapsed && "Tasks"}
@@ -160,29 +89,24 @@ export default function Sidebar() {
             className={({ isActive }) =>
               isActive ? "nav-link active" : "nav-link"
             }
-            style={{
-              justifyContent: "flex-start",
-              padding: "14px 20px",
-            }}
           >
             <FaFolder className="nav-icon" />
             {!isCollapsed && "Categories"}
           </NavLink>
 
+          <NavLink
+            to="/calendar"
+            title={isCollapsed ? "Calendar" : ""}
+            className={({ isActive }) =>
+              isActive ? "nav-link active" : "nav-link"
+            }
+          >
+            <FaCalendarAlt className="nav-icon" />
+            {!isCollapsed && "Calendar"}
+          </NavLink>
+
           {!isCollapsed && (
-            <span
-              className="nav-section-label"
-              style={{
-                display: "block",
-                paddingLeft: "12px",
-                marginTop: "24px",
-                marginBottom: "16px",
-                fontSize: "0.75rem",
-                fontWeight: 700,
-                opacity: 0.5,
-                textTransform: "uppercase",
-              }}
-            >
+            <span className="nav-section-label nav-section-label-account">
               Account
             </span>
           )}
@@ -192,10 +116,6 @@ export default function Sidebar() {
             className={({ isActive }) =>
               isActive ? "nav-link active" : "nav-link"
             }
-            style={{
-              justifyContent: "flex-start",
-              padding: "14px 20px",
-            }}
           >
             <FaCog className="nav-icon" />
             {!isCollapsed && "Settings"}
@@ -203,19 +123,9 @@ export default function Sidebar() {
         </nav>
       </div>
 
-      {/* User + Logout */}
-      <div
-        className="sidebar-user"
-        style={{ padding: isCollapsed ? "20px 0" : "20px" }}
-      >
-        <div
-          className="user-info"
-          style={{
-            justifyContent: isCollapsed ? "center" : "flex-start",
-            padding: isCollapsed ? "0" : "0",
-          }}
-        >
-          <div className="user-avatar-sm" style={{ minWidth: "40px" }}>
+      <div className="sidebar-user">
+        <div className="user-info">
+          <div className="user-avatar-sm">
             {initial}
           </div>
           {!isCollapsed && (
@@ -230,9 +140,6 @@ export default function Sidebar() {
           className="logout-btn"
           onClick={handleLogout}
           title={isCollapsed ? "Logout" : ""}
-          style={{
-            justifyContent: "flex-start",
-          }}
         >
           <FaSignOutAlt />
           {!isCollapsed && "Logout"}

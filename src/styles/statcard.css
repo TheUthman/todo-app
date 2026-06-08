@@ -5,8 +5,8 @@
 .stat-card {
   background: var(--bg-surface);
   border: 1px solid var(--border-light);
-  border-radius: var(--radius-xl);
-  padding: var(--space-6) var(--space-7);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5);
   display: flex;
   align-items: center;
   gap: var(--space-5);
@@ -17,15 +17,15 @@
 }
 
 .stat-card:hover {
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-md);
-  border-color: var(--border-default);
+  transform: none;
+  box-shadow: var(--shadow-sm);
+  border-color: var(--color-primary);
 }
 
 .stat-icon-wrapper {
-  width: 56px;
-  height: 56px;
-  border-radius: var(--radius-full);
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-md);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -37,8 +37,8 @@
 }
 
 .stat-card:hover .stat-icon-wrapper {
-  background-color: var(--card-accent-color, var(--color-primary));
-  color: var(--text-light);
+  background-color: var(--color-primary-soft);
+  color: var(--card-accent-color, var(--color-primary));
 }
 
 .stat-info-payload {
@@ -47,9 +47,9 @@
 
 .stat-info-payload h3 {
   margin: 0;
-  font-size: var(--fs-3xl);
+  font-size: var(--fs-2xl);
   font-weight: var(--fw-bold);
-  letter-spacing: var(--ls-tight);
+  letter-spacing: 0;
   color: var(--text-primary);
   line-height: var(--lh-tight);
 }

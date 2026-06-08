@@ -1,18 +1,22 @@
-﻿import { useState, useRef, useEffect } from "react";
+﻿﻿import { useState, useRef, useEffect } from "react";
 import { FaChevronDown } from "react-icons/fa";
 
 export default function FilterBar({
   status,
   priority,
+  sortBy,
   onStatusChange,
   onPriorityChange,
-  onClear
+  onSortChange,
+  onClear,
 }) {
   const [statusOpen, setStatusOpen] = useState(false);
   const [priorityOpen, setPriorityOpen] = useState(false);
+  const [sortOpen, setSortOpen] = useState(false);
 
   const statusRef = useRef(null);
   const priorityRef = useRef(null);
+  const sortRef = useRef(null);
 
   // Mapped exactly to match your existing backend/state values
   const statusOptions = [
@@ -29,9 +33,20 @@ export default function FilterBar({
     { value: "HIGH", label: "High" },
   ];
 
+  const sortOptions = [
+    { value: "NEWEST", label: "Newest First" },
+    { value: "OLDEST", label: "Oldest First" },
+    { value: "DUE_DATE", label: "Due Date" },
+    { value: "PRIORITY_DESC", label: "Highest Priority" },
+  ];
+
   // Derive readable labels for the trigger button text
-  const currentStatusLabel = statusOptions.find((o) => o.value === status)?.label || status;
-  const currentPriorityLabel = priorityOptions.find((o) => o.value === priority)?.label || priority;
+  const currentStatusLabel =
+    statusOptions.find((o) => o.value === status)?.label || status;
+  const currentPriorityLabel =
+    priorityOptions.find((o) => o.value === priority)?.label || priority;
+  const currentSortLabel =
+    sortOptions.find((o) => o.value === sortBy)?.label || "Sort By";
 
   // Closes dropdowns automatically when clicking elsewhere on the screen
   useEffect(() => {
@@ -42,6 +57,9 @@ export default function FilterBar({
       if (priorityRef.current && !priorityRef.current.contains(e.target)) {
         setPriorityOpen(false);
       }
+      if (sortRef.current && !sortRef.current.contains(e.target)) {
+        setSortOpen(false);
+      }
     };
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
@@ -49,7 +67,6 @@ export default function FilterBar({
 
   return (
     <div className="filter-bar">
-      
       {/* Status Filter */}
       <div className="custom-select-wrapper" ref={statusRef}>
         <button
@@ -58,10 +75,13 @@ export default function FilterBar({
           onClick={() => {
             setStatusOpen(!statusOpen);
             setPriorityOpen(false);
+            setSortOpen(false);
           }}
         >
           <span>{currentStatusLabel}</span>
-          <FaChevronDown className={`arrow-icon ${statusOpen ? "rotated" : ""}`} />
+          <FaChevronDown
+            className={`arrow-icon ${statusOpen ? "rotated" : ""}`}
+          />
         </button>
 
         {statusOpen && (
@@ -90,10 +110,13 @@ export default function FilterBar({
           onClick={() => {
             setPriorityOpen(!priorityOpen);
             setStatusOpen(false);
+            setSortOpen(false);
           }}
         >
           <span>{currentPriorityLabel}</span>
-          <FaChevronDown className={`arrow-icon ${priorityOpen ? "rotated" : ""}`} />
+          <FaChevronDown
+            className={`arrow-icon ${priorityOpen ? "rotated" : ""}`}
+          />
         </button>
 
         {priorityOpen && (
@@ -105,6 +128,41 @@ export default function FilterBar({
                 onClick={() => {
                   onPriorityChange(opt.value);
                   setPriorityOpen(false);
+                }}
+              >
+                {opt.label}
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+
+      {/* Sort Selector */}
+      <div className="custom-select-wrapper" ref={sortRef}>
+        <button
+          type="button"
+          className={`custom-select-trigger ${sortBy ? "active" : ""}`}
+          onClick={() => {
+            setSortOpen(!sortOpen);
+            setStatusOpen(false);
+            setPriorityOpen(false);
+          }}
+        >
+          <span>{currentSortLabel}</span>
+          <FaChevronDown
+            className={`arrow-icon ${sortOpen ? "rotated" : ""}`}
+          />
+        </button>
+
+        {sortOpen && (
+          <ul className="custom-select-dropdown">
+            {sortOptions.map((opt) => (
+              <li
+                key={opt.value}
+                className={`custom-select-option ${sortBy === opt.value ? "selected" : ""}`}
+                onClick={() => {
+                  onSortChange(opt.value);
+                  setSortOpen(false);
                 }}
               >
                 {opt.label}
