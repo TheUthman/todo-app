@@ -220,6 +220,7 @@ body {
   background: var(--bg-main);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  font-display: swap;
   transition:
     background-color var(--transition-base),
     color var(--transition-base);
