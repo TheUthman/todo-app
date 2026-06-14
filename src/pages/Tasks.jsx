@@ -81,6 +81,23 @@ export default function Tasks() {
     );
   }, [tasks, searchQuery]);
 
+  const groupedTasks = useMemo(() => {
+    const groups = {
+      TODO: [],
+      IN_PROGRESS: [],
+      COMPLETED: [],
+    };
+
+    filteredTasks.forEach((task) => {
+      const status = task.status || "TODO";
+      if (groups[status]) {
+        groups[status].push(task);
+      }
+    });
+
+    return groups;
+  }, [filteredTasks]);
+
   return (
     <div className="page-content tasks-page">
       <Topbar
@@ -107,7 +124,7 @@ export default function Tasks() {
         </div>
       ) : filteredTasks.length > 0 ? (
         <TaskList
-          tasks={filteredTasks}
+          groupedTasks={groupedTasks}
           onEdit={handleEditClick}
           onDelete={(id) => setConfirmDeleteTaskId(id)}
           onToggleComplete={handleToggleComplete}
