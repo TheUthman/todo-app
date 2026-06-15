@@ -2,7 +2,7 @@
 import { useEffect, useState, useMemo } from "react";
 import Topbar from "../components/Topbar";
 import SearchBar from "../components/SearchBar";
-import TaskList from "../components/TaskList";
+import TaskGridView from "../components/TaskGridView";
 import AddTaskModal from "../components/AddTaskModal";
 import EditTaskModal from "../components/EditTaskModal";
 import EmptyState from "../components/EmptyState";
@@ -59,6 +59,26 @@ export default function Tasks() {
     }
   };
 
+  const handleStatusChange = async (task, newStatus) => {
+    const originalStatus = task.status;
+
+    setTasks((prevTasks) =>
+      prevTasks.map((t) => (t.id === task.id ? { ...t, status: newStatus } : t))
+    );
+
+    try {
+      await api.put(`/tasks/${task.id}`, {
+        ...task,
+        status: newStatus,
+      });
+    } catch (err) {
+      console.error("Failed to update task status:", err);
+      setTasks((prevTasks) =>
+        prevTasks.map((t) => (t.id === task.id ? { ...t, status: originalStatus } : t))
+      );
+    }
+  };
+
   const handleEditClick = (task) => {
     setTaskToEdit(task);
     setShowEditModal(true);
@@ -80,23 +100,6 @@ export default function Tasks() {
       task.title?.toLowerCase().includes(searchQuery.toLowerCase())
     );
   }, [tasks, searchQuery]);
-
-  const groupedTasks = useMemo(() => {
-    const groups = {
-      TODO: [],
-      IN_PROGRESS: [],
-      COMPLETED: [],
-    };
-
-    filteredTasks.forEach((task) => {
-      const status = task.status || "TODO";
-      if (groups[status]) {
-        groups[status].push(task);
-      }
-    });
-
-    return groups;
-  }, [filteredTasks]);
 
   return (
     <div className="page-content tasks-page">
@@ -123,11 +126,11 @@ export default function Tasks() {
           <p>Syncing task workflow streams...</p>
         </div>
       ) : filteredTasks.length > 0 ? (
-        <TaskList
-          groupedTasks={groupedTasks}
+        <TaskGridView
+          tasks={filteredTasks}
           onEdit={handleEditClick}
           onDelete={(id) => setConfirmDeleteTaskId(id)}
-          onToggleComplete={handleToggleComplete}
+          onStatusChange={handleStatusChange}
         />
       ) : (
         <EmptyState
