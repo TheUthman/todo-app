@@ -130,6 +130,22 @@ export default function CategoryDetails() {
     });
   }, [tasks, priorityFilter, searchQuery]);
 
+  // Group filtered tasks by status for TaskList component
+  const groupedFilteredTasks = useMemo(() => {
+    const grouped = {
+      TODO: [],
+      IN_PROGRESS: [],
+      COMPLETED: [],
+    };
+    filteredTasks.forEach((task) => {
+      // Ensure task.status is a valid key before pushing
+      if (grouped[task.status]) {
+        grouped[task.status].push(task);
+      }
+    });
+    return grouped;
+  }, [filteredTasks]);
+
   return (
     <div className="page-content tasks-page">
       <Topbar
@@ -141,7 +157,9 @@ export default function CategoryDetails() {
         <div className="category-detail-header">
           <span
             className="category-detail-dot"
-            style={{ backgroundColor: category.color || "var(--color-primary)" }}
+            style={{
+              backgroundColor: category.color || "var(--color-primary)",
+            }}
           />
           <span className="category-detail-name">{category.name}</span>
         </div>
@@ -211,8 +229,8 @@ export default function CategoryDetails() {
           <p>Gathering tasks...</p>
         </div>
       ) : filteredTasks.length > 0 ? (
-        <TaskList
-          tasks={filteredTasks}
+        <TaskList // Pass the grouped tasks to the TaskList component
+          groupedTasks={groupedFilteredTasks}
           onEdit={handleEditClick}
           onDelete={(id) => setConfirmDeleteTaskId(id)}
           onToggleComplete={handleToggleComplete}
