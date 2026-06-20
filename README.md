@@ -1,16 +1,89 @@
-# React + Vite
+# TodoFlow Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+React + Vite frontend for the TodoFlow task manager. The app talks to the Spring Boot backend through a single API base URL configured with `VITE_API_URL`.
 
-Currently, two official plugins are available:
+## Requirements
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- Node.js 20 or newer
+- npm
 
-## React Compiler
+## Setup
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Install dependencies:
 
-## Expanding the ESLint configuration
+```bash
+npm install
+```
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Create a local `.env` file:
+
+```env
+VITE_API_URL=http://localhost:8080
+```
+
+For the deployed backend, use the Railway service URL without `/api` at the end:
+
+```env
+VITE_API_URL=https://todo-flow-server-production.up.railway.app
+```
+
+The app automatically appends `/api`, so login requests go to:
+
+```text
+{VITE_API_URL}/api/auth/login
+```
+
+## Scripts
+
+Start the dev server:
+
+```bash
+npm run dev
+```
+
+Build for production:
+
+```bash
+npm run build
+```
+
+Preview the production build:
+
+```bash
+npm run preview
+```
+
+Run linting:
+
+```bash
+npm run lint
+```
+
+## Deployment
+
+When deploying to Vercel, set this environment variable in the Vercel project settings:
+
+```env
+VITE_API_URL=https://todo-flow-server-production.up.railway.app
+```
+
+This project includes `vercel.json` to rewrite all routes to `index.html`. That is required for React Router routes such as `/login`, `/register`, and `/dashboard` to work when opened directly or refreshed.
+
+The backend CORS configuration must also allow the deployed Vercel frontend URL.
+
+## API Routes Used
+
+- `POST /api/auth/login`
+- `POST /api/auth/register`
+- `GET /api/dashboard`
+- `GET /api/tasks`
+- `POST /api/tasks`
+- `PUT /api/tasks/{id}`
+- `DELETE /api/tasks/{id}`
+- `GET /api/categories`
+- `POST /api/categories`
+- `PUT /api/categories/{id}`
+- `DELETE /api/categories/{id}`
+- `GET /api/users/profile`
+- `PUT /api/users/profile`
+- `POST /api/users/change-password`
