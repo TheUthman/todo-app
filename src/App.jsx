@@ -43,7 +43,6 @@ function App() {
             }
           />
 
-          {/* Public Authentication Pages (Redirect straight to dashboard if already logged in) */}
           <Route
             path="/login"
             element={
