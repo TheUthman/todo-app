@@ -81,6 +81,14 @@ export default function Tasks() {
     );
   }, [tasks, searchQuery]);
 
+  const taskSummary = useMemo(() => {
+    const completed = tasks.filter((task) => task.status === "COMPLETED").length;
+    return {
+      completed,
+      pending: Math.max(tasks.length - completed, 0),
+    };
+  }, [tasks]);
+
   return (
     <div className="page-content tasks-page">
       <Topbar
@@ -106,12 +114,24 @@ export default function Tasks() {
           <p>Syncing task workflow streams...</p>
         </div>
       ) : filteredTasks.length > 0 ? (
-        <TaskList
-          tasks={filteredTasks}
-          onEdit={handleEditClick}
-          onDelete={(id) => setConfirmDeleteTaskId(id)}
-          onToggleComplete={handleToggleComplete}
-        />
+        <section className="todo-sheet" aria-label="Task checklist">
+          <div className="todo-sheet-header">
+            <div>
+              <span className="todo-sheet-kicker">Today&apos;s list</span>
+              <h2>Things to do</h2>
+            </div>
+            <div className="todo-sheet-counts" aria-label="Task counts">
+              <span>{taskSummary.pending} open</span>
+              <span>{taskSummary.completed} done</span>
+            </div>
+          </div>
+          <TaskList
+            tasks={filteredTasks}
+            onEdit={handleEditClick}
+            onDelete={(id) => setConfirmDeleteTaskId(id)}
+            onToggleComplete={handleToggleComplete}
+          />
+        </section>
       ) : (
         <EmptyState
           title={searchQuery ? "No search matches found" : "No tasks documented yet"}

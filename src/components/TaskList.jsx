@@ -49,24 +49,20 @@ export default function TaskList({
               </div>
 
               <div className="task-list-meta">
-                <div className="meta-badges">
-                  <span className={`badge-priority ${priorityClass}`}>
-                    {formatLabel(task.priority)}
+                <span className={`task-priority-pill ${priorityClass}`}>
+                  {formatLabel(task.priority)}
+                </span>
+                <span className={`task-status-pill ${statusClass}`}>
+                  {formatLabel(task.status)}
+                </span>
+                <span className="task-list-date">
+                  <FaCalendarAlt /> {formattedDate}
+                </span>
+                {task.categoryName && (
+                  <span className="task-list-cat">
+                    <FaTag /> {task.categoryName}
                   </span>
-                  <span className={`badge-status ${statusClass}`}>
-                    {formatLabel(task.status)}
-                  </span>
-                </div>
-                <div className="meta-details">
-                  <span className="task-list-date">
-                    <FaCalendarAlt /> {formattedDate}
-                  </span>
-                  {task.categoryName && (
-                    <span className="task-list-cat">
-                      <FaTag style={{width:"" , height:""}} /> {task.categoryName}
-                    </span>
-                  )}
-                </div>
+                )}
               </div>
             </div>
 
